@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/pages/Signup/signup_screen.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;
-  final Function press;
+  final VoidCallback? press;
   const AlreadyHaveAnAccountCheck({
     Key? key,
     this.login = true,
-    required this.press,
+    this.press,
   }) : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
           style: TextStyle(color: kPrimaryColor),
         ),
         GestureDetector(
-          onTap: ()=>{},
+          onTap: press,
           child: Text(
             login ? "Sign Up" : "Sign In",
             style: TextStyle(
