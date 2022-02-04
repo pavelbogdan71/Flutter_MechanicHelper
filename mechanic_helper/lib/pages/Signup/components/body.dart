@@ -16,6 +16,8 @@ class Body extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -33,24 +35,34 @@ class Body extends StatelessWidget {
               "assets/icons/signup.svg",
               height: size.height * 0.35,
             ),
-            RoundedInputField(
-              controller: emailController,
-              hintText: "Your Email",
-              onChanged: (value) {},
+            Form(
+              key: _formkey,
+              child:Column(
+                children:[
+                RoundedInputField(
+                  controller: emailController,
+                  hintText: "Your Email",
+                  onChanged: (value) {},
+                ),
+                RoundedPasswordField(
+                  controller: passwordController,
+                  onChanged: (value) {},
+                ),
+                  RoundedButton(
+                    text: "SIGNUP",
+                    press: () {
+                      context.read<AuthenticationService>().signUp(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim()
+                      );
+                      FormState? form = _formkey.currentState;
+                      form?.validate();
+                    },
+                  ),
+                ]
+              )
             ),
-            RoundedPasswordField(
-              controller: passwordController,
-              onChanged: (value) {},
-            ),
-            RoundedButton(
-              text: "SIGNUP",
-              press: () {
-                 context.read<AuthenticationService>().signUp(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim()
-                );
-              },
-            ),
+
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
               login: false,

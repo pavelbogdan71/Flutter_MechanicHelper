@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'text_field_container.dart';
 import 'package:mechanic_helper/constants.dart';
+import 'package:validators/validators.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String hintText;
@@ -15,10 +16,11 @@ class RoundedInputField extends StatelessWidget {
     this.controller,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
         onChanged: onChanged,
         controller:controller,
         cursorColor: kPrimaryColor,
@@ -29,7 +31,10 @@ class RoundedInputField extends StatelessWidget {
           ),
           hintText: hintText,
           border: InputBorder.none,
-        ),
+          ),
+        validator:(value) {
+          return (!isEmail(value!))?"Invalid Email": null;
+        },
       ),
     );
   }

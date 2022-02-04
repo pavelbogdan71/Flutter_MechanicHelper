@@ -62,6 +62,7 @@ class Body extends StatelessWidget {
                     email: emailController.text.trim(),
                     password: passwordController.text.trim()
                 );
+
               },
             ),
             SizedBox(height: size.height * 0.03),
