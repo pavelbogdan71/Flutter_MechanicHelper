@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mechanic_helper/pages/services/authentication_service.dart';
-import 'package:provider/src/provider.dart';
+
 
 class Body extends StatelessWidget{
 
@@ -13,14 +12,13 @@ class Body extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("profile"),
-              ElevatedButton.icon(
-                onPressed: () {
-                  context.read<AuthenticationService>().signOut();
-                },
-                icon: Icon(Icons.logout),
-                label: Text("Logout"),
-              )
+              Row(
+                children: [
+                  Text("CarDetails"),
+                  Text("BMW"),
+                ],
+              ),
+
             ]),
       ),
     );

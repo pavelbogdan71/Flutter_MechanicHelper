@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mechanic_helper/pages/car_details/car_details_screen.dart';
 import 'package:mechanic_helper/pages/history/history_screen.dart';
 import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';
 import 'package:mechanic_helper/pages/profile/profile_screen.dart';
@@ -13,9 +14,10 @@ class PrincipalScreen extends StatefulWidget {
 
 class CustomAppbar extends State<PrincipalScreen> {
   int _selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     HomePageScreen(),
     HistoryScreen(),
+    CarDetailsScreen(),
     ProfileScreen()
   ];
 
@@ -23,7 +25,6 @@ class CustomAppbar extends State<PrincipalScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    print('selected');
   }
 
   int getSelectedIndex() {
@@ -50,6 +51,11 @@ class CustomAppbar extends State<PrincipalScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'History',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_car_filled_rounded),
+            label: 'Car details',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(

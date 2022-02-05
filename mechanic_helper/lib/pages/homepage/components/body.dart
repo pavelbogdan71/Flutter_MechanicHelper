@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mechanic_helper/authentication_service.dart';
+import 'package:mechanic_helper/pages/services/authentication_service.dart';
 import 'package:provider/src/provider.dart';
 
 
