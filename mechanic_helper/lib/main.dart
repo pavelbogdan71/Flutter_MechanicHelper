@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mechanic_helper/authentication_service.dart';
 import 'package:mechanic_helper/pages/Welcome/welcome_screen.dart';
-import 'package:mechanic_helper/pages/homepage.dart';
+import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';
+import 'package:mechanic_helper/pages/principal/principal_screen.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
 
@@ -53,7 +54,7 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User>();
 
     if(firebaseUser != null){
-      return HomePage();
+      return PrincipalScreen();
     }
     return WelcomeScreen();
   }

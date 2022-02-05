@@ -8,9 +8,10 @@ import 'package:mechanic_helper/components/rounded_button.dart';
 import 'package:mechanic_helper/components/rounded_input_field.dart';
 import 'package:mechanic_helper/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mechanic_helper/pages/principal/principal_screen.dart';
 import 'package:provider/src/provider.dart';
 
-import '../../homepage.dart';
+import '../../homepage/homepage_screen.dart';
 
 
 class Body extends StatelessWidget {
@@ -27,7 +28,7 @@ class Body extends StatelessWidget {
     final firebaseUser = context.watch<User>();
 
     if(firebaseUser != null){
-      return HomePage();
+      return PrincipalScreen();
     }
 
     Size size = MediaQuery.of(context).size;
