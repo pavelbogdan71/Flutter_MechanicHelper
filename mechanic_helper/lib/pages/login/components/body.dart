@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/authentication_service.dart';
-import 'package:mechanic_helper/pages/Login/components/background.dart';
-import 'package:mechanic_helper/pages/Signup/signup_screen.dart';
+import 'package:mechanic_helper/pages/login/components/background.dart';
+import 'package:mechanic_helper/pages/signup/signup_screen.dart';
 import 'package:mechanic_helper/components/already_have_an_account_acheck.dart';
 import 'package:mechanic_helper/components/rounded_button.dart';
 import 'package:mechanic_helper/components/rounded_input_field.dart';

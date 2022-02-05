@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mechanic_helper/pages/Login/components/body.dart';
+import 'package:mechanic_helper/pages/login/components/body.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mechanic_helper/authentication_service.dart';
-import 'package:mechanic_helper/pages/Welcome/welcome_screen.dart';
+import 'package:mechanic_helper/pages/welcome/welcome_screen.dart';
 import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';
 import 'package:mechanic_helper/pages/principal/principal_screen.dart';
 import 'package:provider/provider.dart';

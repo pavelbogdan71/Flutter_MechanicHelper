@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/authentication_service.dart';
-import 'package:mechanic_helper/pages/Login/login_screen.dart';
-import 'package:mechanic_helper/pages/Signup/components/background.dart';
-import 'package:mechanic_helper/pages/Signup/components/or_divider.dart';
-import 'package:mechanic_helper/pages/Signup/components/social_icon.dart';
+import 'package:mechanic_helper/pages/login/login_screen.dart';
+import 'package:mechanic_helper/pages/signup/components/background.dart';
+import 'package:mechanic_helper/pages/signup/components/or_divider.dart';
+import 'package:mechanic_helper/pages/signup/components/social_icon.dart';
 import 'package:mechanic_helper/components/already_have_an_account_acheck.dart';
 import 'package:mechanic_helper/components/rounded_button.dart';
 import 'package:mechanic_helper/components/rounded_input_field.dart';
