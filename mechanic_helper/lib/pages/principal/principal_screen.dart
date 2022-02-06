@@ -35,6 +35,7 @@ class CustomAppbar extends State<PrincipalScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.black87,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

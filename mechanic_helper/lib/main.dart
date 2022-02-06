@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:mechanic_helper/pages/services/authentication_service.dart';
 import 'package:mechanic_helper/pages/welcome/welcome_screen.dart';
 import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';
@@ -11,6 +12,7 @@ import 'constants.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 
