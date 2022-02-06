@@ -32,63 +32,74 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            children: [
-              StreamBuilder<DocumentSnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("car_details")
-                    .doc('${FirebaseAuth.instance.currentUser.email}')
-                    .snapshots(),
-                builder: (_, snapshot) {
-                  if (snapshot.hasData) {
-                    var data = snapshot.data!.data();
-                    var carBrand = data['brand'];
-                    var carModel = data['model'];
-                    var carYear = data['year'];
-                    var carKm = data['km'];
-
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CarDetailContainer(
-                                child: Text(carBrand),
-                                icon: Icon(Icons.car_rental),
-                                title: "Brand"
-                            ),
-                            CarDetailContainer(
-                                child: Text(carModel),
-                                icon: Icon(Icons.car_rental),
-                                title: "Model"
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CarDetailContainer(
-                                child: Text(carYear.toString()),
-                                icon: Icon(Icons.car_rental),
-                                title: "Year of manufacter"
-                            ),
-                            CarDetailContainer(
-                                child: Text(carKm.toString()),
-                                icon: Icon(Icons.car_rental),
-                                title: "Kilometers"
-                            ),
-                          ],
-                        )
-                      ],
-                    );
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
+          Container(
+            height: size.height*0.7,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40)
               ),
-            ],
+            ),
+            child: Column(
+              children: [
+                StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("car_details")
+                      .doc('${FirebaseAuth.instance.currentUser.email}')
+                      .snapshots(),
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData) {
+                      var data = snapshot.data!.data();
+                      var carBrand = data['brand'];
+                      var carModel = data['model'];
+                      var carYear = data['year'];
+                      var carKm = data['km'];
+
+                      return Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CarDetailContainer(
+                                  child: Text(carBrand),
+                                  icon: Icon(Icons.car_rental),
+                                  title: "Brand"
+                              ),
+                              CarDetailContainer(
+                                  child: Text(carModel),
+                                  icon: Icon(Icons.car_rental),
+                                  title: "Model"
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CarDetailContainer(
+                                  child: Text(carYear.toString()),
+                                  icon: Icon(Icons.car_rental),
+                                  title: "Year of manufacter"
+                              ),
+                              CarDetailContainer(
+                                  child: Text(carKm.toString()),
+                                  icon: Icon(Icons.car_rental),
+                                  title: "Kilometers"
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ],
+            ),
           ),
+
         ]),
       ),
     );
