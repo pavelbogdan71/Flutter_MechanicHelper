@@ -12,6 +12,7 @@ class Body extends StatelessWidget {
       child: Center(
         heightFactor: 90,
         child: Column(children: [
+          SizedBox(height: 10,),
           Container(
             padding: const EdgeInsets.all(10),
             child: const Text(
@@ -25,6 +26,7 @@ class Body extends StatelessWidget {
             alignment: Alignment.topLeft,
           ),
           Container(
+            padding: const EdgeInsets.all(20),
             child: ClipRRect(
               child: Image.asset(
                 "assets/images/car.png",
@@ -32,74 +34,102 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            height: size.height*0.7,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40)
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFFEEEEEE),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)),
+              ),
+              child: Column(
+                children: [
+                  StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("car_details")
+                        .doc('${FirebaseAuth.instance.currentUser.email}')
+                        .snapshots(),
+                    builder: (_, snapshot) {
+                      if (snapshot.hasData) {
+                        var data = snapshot.data!.data();
+                        var carBrand = data['brand'];
+                        var carModel = data['model'];
+                        var carYear = data['year'];
+                        var carKm = data['km'];
+                        var carVin = data['vin'];
+                        var engineSize = data["engine_size"];
+                        var fuelType = data["fuel"];
+                        var hp = data["hp"];
+
+                        return Column(
+                          children: [
+                            SizedBox(height: 20,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CarDetailContainer(
+                                    content: carBrand,
+                                    icon: Icon(Icons.car_rental),
+                                    title: "Brand"),
+                                CarDetailContainer(
+                                    content: carModel,
+                                    icon: Icon(Icons.car_rental),
+                                    title: "Model"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CarDetailContainer(
+                                    content: carYear.toString(),
+                                    icon: Icon(Icons.car_rental),
+                                    title: "Year"),
+                                CarDetailContainer(
+                                    content: carKm.toString(),
+                                    icon: Icon(Icons.car_rental),
+                                    title: "Kilometers"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CarDetailContainer(
+                                    content: engineSize,
+                                    icon: Icon(Icons.car_rental),
+                                    title: "Engine size"),
+                                CarDetailContainer(
+                                    content: carVin,
+                                    icon: Icon(Icons.car_rental),
+                                    title: "VIN"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CarDetailContainer(
+                                    content: fuelType,
+                                    icon: Icon(Icons.car_rental),
+                                    title: "Fuel type"),
+                                CarDetailContainer(
+                                    content: hp,
+                                    icon: Icon(Icons.car_rental),
+                                    title: "HP"),
+                              ],
+                            ),
+                          ],
+                        );
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
+                ],
               ),
             ),
-            child: Column(
-              children: [
-                StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection("car_details")
-                      .doc('${FirebaseAuth.instance.currentUser.email}')
-                      .snapshots(),
-                  builder: (_, snapshot) {
-                    if (snapshot.hasData) {
-                      var data = snapshot.data!.data();
-                      var carBrand = data['brand'];
-                      var carModel = data['model'];
-                      var carYear = data['year'];
-                      var carKm = data['km'];
-
-                      return Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CarDetailContainer(
-                                  child: Text(carBrand),
-                                  icon: Icon(Icons.car_rental),
-                                  title: "Brand"
-                              ),
-                              CarDetailContainer(
-                                  child: Text(carModel),
-                                  icon: Icon(Icons.car_rental),
-                                  title: "Model"
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CarDetailContainer(
-                                  child: Text(carYear.toString()),
-                                  icon: Icon(Icons.car_rental),
-                                  title: "Year of manufacter"
-                              ),
-                              CarDetailContainer(
-                                  child: Text(carKm.toString()),
-                                  icon: Icon(Icons.car_rental),
-                                  title: "Kilometers"
-                              ),
-                            ],
-                          )
-                        ],
-                      );
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
-              ],
-            ),
           ),
-
         ]),
       ),
     );

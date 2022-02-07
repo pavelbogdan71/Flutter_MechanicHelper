@@ -40,9 +40,10 @@ class CustomAppbar extends State<PrincipalScreen> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.grey.shade200,
+        unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black26,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
