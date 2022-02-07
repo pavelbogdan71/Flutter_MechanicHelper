@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CarDetailContainer extends StatelessWidget {
   final String content;
@@ -28,25 +29,35 @@ class CarDetailContainer extends StatelessWidget {
           Flexible(
             child: Text(
               title,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w900,
-              ),
+              style: GoogleFonts.comfortaa(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w900,
+                  textStyle: Theme.of(context).textTheme.headline1),
             ),
           ),
-          SizedBox(height: 6,),
+          SizedBox(
+            height: 6,
+          ),
           Text(
             content,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-            ),
+            style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+                textStyle: Theme.of(context).textTheme.headline1),
           )
         ],
       ),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
         color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: Offset(0, 1),
+          )
+        ],
       ),
     );
   }

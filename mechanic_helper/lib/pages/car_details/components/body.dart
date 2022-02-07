@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/car_detail_container.dart';
 
 class Body extends StatelessWidget {
@@ -12,16 +13,22 @@ class Body extends StatelessWidget {
       child: Center(
         heightFactor: 90,
         child: Column(children: [
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 15,
+          ),
           Container(
-            padding: const EdgeInsets.all(10),
-            child: const Text(
+            margin: const EdgeInsets.only(
+              left: 20,
+            ),
+            padding: const EdgeInsets.all(15),
+            child: Text(
               'Car details',
               textScaleFactor: 2,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.comfortaa(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade200,
+                  fontSize: 16,
+                  textStyle: Theme.of(context).textTheme.headline1),
             ),
             alignment: Alignment.topLeft,
           ),
@@ -37,11 +44,17 @@ class Body extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
-                color: Color(0xFFEEEEEE),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40)),
-              ),
+                  color: Color(0xFFEEEEEE),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: Offset(0, 3)),
+                  ]),
               child: Column(
                 children: [
                   StreamBuilder<DocumentSnapshot>(
@@ -63,7 +76,9 @@ class Body extends StatelessWidget {
 
                         return Column(
                           children: [
-                            SizedBox(height: 20,),
+                            SizedBox(
+                              height: 20,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
