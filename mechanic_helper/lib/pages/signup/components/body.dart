@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/pages/services/authentication_service.dart';
 import 'package:mechanic_helper/pages/login/login_screen.dart';
 import 'package:mechanic_helper/pages/signup/components/background.dart';
@@ -28,12 +29,16 @@ class Body extends StatelessWidget {
           children: <Widget>[
             Text(
               "SIGNUP",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: GoogleFonts.comfortaa(
+                  fontWeight: FontWeight.bold,
+                fontSize: 20
+              ),
             ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/signup.svg",
+            Image.asset(
+              "assets/images/signup_image.png",
               height: size.height * 0.35,
+              width: size.width * 0.95,
             ),
             Form(
               key: _formkey,
@@ -77,24 +82,6 @@ class Body extends StatelessWidget {
                 );
               },
             ),
-            OrDivider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SocalIcon(
-                  iconSrc: "assets/icons/facebook.svg",
-                  press: () {},
-                ),
-                SocalIcon(
-                  iconSrc: "assets/icons/twitter.svg",
-                  press: () {},
-                ),
-                SocalIcon(
-                  iconSrc: "assets/icons/google-plus.svg",
-                  press: () {},
-                ),
-              ],
-            )
           ],
         ),
       ),

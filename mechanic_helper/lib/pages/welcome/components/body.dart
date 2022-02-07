@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/pages/login/login_screen.dart';
 import 'package:mechanic_helper/pages/signup/signup_screen.dart';
 import 'package:mechanic_helper/pages/welcome/components/background.dart';
@@ -17,12 +18,15 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "WELCOME TO EDU",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              "WELCOME TO MECHANIC HELPER",
+              style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.w900,
+                fontSize: 17
+              ),
             ),
             SizedBox(height: size.height * 0.05),
-            SvgPicture.asset(
-              "assets/icons/chat.svg",
+            Image.asset(
+              "assets/images/welcome_image.jpg",
               height: size.height * 0.45,
             ),
             SizedBox(height: size.height * 0.05),
@@ -41,7 +45,7 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "SIGN UP",
-              color: kPrimaryLightColor,
+              color: Colors.white24,
               textColor: Colors.black,
               press: () => {
                 Navigator.push(

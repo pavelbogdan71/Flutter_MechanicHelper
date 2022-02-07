@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/pages/services/authentication_service.dart';
 import 'package:mechanic_helper/pages/login/components/background.dart';
 import 'package:mechanic_helper/pages/signup/signup_screen.dart';
@@ -13,13 +14,11 @@ import 'package:provider/src/provider.dart';
 
 import '../../homepage/homepage_screen.dart';
 
-
 class Body extends StatelessWidget {
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-   Body({
+  Body({
     Key? key,
   }) : super(key: key);
 
@@ -27,7 +26,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
 
-    if(firebaseUser != null){
+    if (firebaseUser != null) {
       return PrincipalScreen();
     }
 
@@ -39,11 +38,14 @@ class Body extends StatelessWidget {
           children: <Widget>[
             Text(
               "LOGIN",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
+            Image.asset(
+              "assets/images/login_image.png",
               height: size.height * 0.35,
             ),
             SizedBox(height: size.height * 0.03),
@@ -58,12 +60,10 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: (){
+              press: () {
                 context.read<AuthenticationService>().signIn(
                     email: emailController.text.trim(),
-                    password: passwordController.text.trim()
-                );
-
+                    password: passwordController.text.trim());
               },
             ),
             SizedBox(height: size.height * 0.03),

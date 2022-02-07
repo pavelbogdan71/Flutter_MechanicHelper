@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mechanic_helper/constants.dart';
 import 'package:mechanic_helper/pages/car_details/car_details_screen.dart';
 import 'package:mechanic_helper/pages/history/history_screen.dart';
 import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';
@@ -35,7 +37,7 @@ class CustomAppbar extends State<PrincipalScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.blueGrey.shade900,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -43,7 +45,7 @@ class CustomAppbar extends State<PrincipalScreen> {
         selectedItemColor: Colors.grey.shade200,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black26,
+        backgroundColor: kPrimaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -68,6 +70,12 @@ class CustomAppbar extends State<PrincipalScreen> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedLabelStyle:GoogleFonts.comfortaa(
+          fontSize: 12,
+        ),
+        unselectedLabelStyle: GoogleFonts.comfortaa(
+          fontSize: 11,
+        ),
       ),
     );
   }

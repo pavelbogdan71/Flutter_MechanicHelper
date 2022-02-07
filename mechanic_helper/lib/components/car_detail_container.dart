@@ -26,6 +26,7 @@ class CarDetailContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon,
+          SizedBox(height: 4,),
           Flexible(
             child: Text(
               title,

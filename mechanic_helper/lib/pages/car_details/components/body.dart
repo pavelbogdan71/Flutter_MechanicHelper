@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/car_detail_container.dart';
+import 'package:mechanic_helper/constants.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -77,7 +78,7 @@ class Body extends StatelessWidget {
                         return Column(
                           children: [
                             SizedBox(
-                              height: 20,
+                              height: 35,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -85,11 +86,15 @@ class Body extends StatelessWidget {
                               children: [
                                 CarDetailContainer(
                                     content: carBrand,
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.directions_car_filled,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "Brand"),
                                 CarDetailContainer(
                                     content: carModel,
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.car_rental,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "Model"),
                               ],
                             ),
@@ -99,11 +104,15 @@ class Body extends StatelessWidget {
                               children: [
                                 CarDetailContainer(
                                     content: carYear.toString(),
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.calendar_today_rounded,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "Year"),
                                 CarDetailContainer(
                                     content: carKm.toString(),
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.double_arrow_rounded,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "Kilometers"),
                               ],
                             ),
@@ -113,11 +122,15 @@ class Body extends StatelessWidget {
                               children: [
                                 CarDetailContainer(
                                     content: engineSize,
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.miscellaneous_services,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "Engine size"),
                                 CarDetailContainer(
                                     content: carVin,
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.document_scanner,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "VIN"),
                               ],
                             ),
@@ -127,11 +140,15 @@ class Body extends StatelessWidget {
                               children: [
                                 CarDetailContainer(
                                     content: fuelType,
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.local_gas_station_rounded,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "Fuel type"),
                                 CarDetailContainer(
                                     content: hp,
-                                    icon: Icon(Icons.car_rental),
+                                    icon: Icon(Icons.speed,
+                                      color: Colors.blueGrey.shade900,
+                                    ),
                                     title: "HP"),
                               ],
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'text_field_container.dart';
 import 'package:mechanic_helper/constants.dart';
 
@@ -21,6 +22,9 @@ class RoundedPasswordField extends StatelessWidget {
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
           hintText: "Password",
+          hintStyle: GoogleFonts.comfortaa(
+            fontSize: 15
+          ),
           icon: Icon(
             Icons.lock,
             color: kPrimaryColor,

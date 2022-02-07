@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/constants.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -33,7 +34,10 @@ class RoundedButton extends StatelessWidget {
     return ElevatedButton(
       child: Text(
         text,
-        style: TextStyle(color: textColor),
+        style: GoogleFonts.comfortaa(
+            color: textColor,
+          fontWeight: FontWeight.bold
+        ),
       ),
       onPressed: press,
       style: ElevatedButton.styleFrom(

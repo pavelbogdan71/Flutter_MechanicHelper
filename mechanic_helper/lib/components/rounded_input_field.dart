@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'text_field_container.dart';
 import 'package:mechanic_helper/constants.dart';
 import 'package:validators/validators.dart';
@@ -30,6 +31,9 @@ class RoundedInputField extends StatelessWidget {
             color: kPrimaryColor,
           ),
           hintText: hintText,
+          hintStyle: GoogleFonts.comfortaa(
+            fontSize: 15
+          ),
           border: InputBorder.none,
           ),
         validator:(value) {
