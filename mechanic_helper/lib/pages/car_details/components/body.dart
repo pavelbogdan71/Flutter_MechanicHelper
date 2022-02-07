@@ -34,11 +34,12 @@ class Body extends StatelessWidget {
             alignment: Alignment.topLeft,
           ),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
             child: ClipRRect(
               child: Image.asset(
                 "assets/images/car.png",
                 width: size.width * 0.90,
+                height: size.height* 0.2,
               ),
             ),
           ),
