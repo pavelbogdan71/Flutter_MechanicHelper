@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mechanic_helper/models/car_details_model.dart';
+import 'package:mechanic_helper/pages/services/database_service.dart';
 
 class AuthenticationService{
 
@@ -25,6 +27,8 @@ class AuthenticationService{
   Future<String> signUp({String? email,String? password}) async{
     try{
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      CarDetailsModel carDetailsModel = CarDetailsModel(brand: "", engineSize: "", fuel: "", hp: "", km: "", model: "", vin: "", year: "");
+      DatabaseService().addCarDetails(carDetailsModel);
       return "Signed up";
     }on FirebaseAuthException catch (e){
       return e.message;

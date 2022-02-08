@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/car_detail_container.dart';
 import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/models/car_details_model.dart';
+import 'package:mechanic_helper/pages/services/database_service.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -67,14 +69,8 @@ class Body extends StatelessWidget {
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
                         var data = snapshot.data!.data();
-                        var carBrand = data['brand'];
-                        var carModel = data['model'];
-                        var carYear = data['year'];
-                        var carKm = data['km'];
-                        var carVin = data['vin'];
-                        var engineSize = data["engine_size"];
-                        var fuelType = data["fuel"];
-                        var hp = data["hp"];
+                        CarDetailsModel carDetails = CarDetailsModel.getCarDetails(data);
+
 
                         return Column(
                           children: [
@@ -86,13 +82,13 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: carBrand,
+                                    content: carDetails.brand,
                                     icon: Icon(Icons.directions_car_filled,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Brand"),
                                 CarDetailContainer(
-                                    content: carModel,
+                                    content: carDetails.model,
                                     icon: Icon(Icons.car_rental,
                                       color: Colors.blueGrey.shade900,
                                     ),
@@ -104,13 +100,13 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: carYear.toString(),
+                                    content: carDetails.year,
                                     icon: Icon(Icons.calendar_today_rounded,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Year"),
                                 CarDetailContainer(
-                                    content: carKm.toString(),
+                                    content: carDetails.km,
                                     icon: Icon(Icons.double_arrow_rounded,
                                       color: Colors.blueGrey.shade900,
                                     ),
@@ -122,13 +118,13 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: engineSize,
+                                    content: carDetails.engineSize,
                                     icon: Icon(Icons.miscellaneous_services,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Engine size"),
                                 CarDetailContainer(
-                                    content: carVin,
+                                    content: carDetails.vin,
                                     icon: Icon(Icons.document_scanner,
                                       color: Colors.blueGrey.shade900,
                                     ),
@@ -140,13 +136,13 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: fuelType,
+                                    content: carDetails.fuel,
                                     icon: Icon(Icons.local_gas_station_rounded,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Fuel type"),
                                 CarDetailContainer(
-                                    content: hp,
+                                    content: carDetails.hp,
                                     icon: Icon(Icons.speed,
                                       color: Colors.blueGrey.shade900,
                                     ),
