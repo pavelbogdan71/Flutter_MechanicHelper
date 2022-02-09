@@ -13,5 +13,7 @@ class DatabaseService {
         SetOptions(merge: true));
   }
 
- 
+  Future<QuerySnapshot> getCarBrands() async{
+    return await carBrands.get();
+  }
 }

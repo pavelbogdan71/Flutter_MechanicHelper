@@ -20,15 +20,30 @@ class EditCarDetailsScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          DropdownSearch<String>(
-              mode: Mode.MENU,
-              showSelectedItems: true,
-              items: ['asd', 'gdf'],
-              label: "Menu mode",
-              hint: "country in menu mode",
-              popupItemDisabled: (String s) => s.startsWith('I'),
-              onChanged: print,
-              selectedItem: "Brazil"),
+          FutureBuilder<QuerySnapshot>(
+            future: DatabaseService().getCarBrands(),
+            builder: (_, snapshot) {
+              if (snapshot.hasData) {
+                List<QueryDocumentSnapshot> list = snapshot.data!.docs;
+                List<String> carBrandsList=[];
+                list.forEach((QueryDocumentSnapshot element) {
+                  carBrandsList.add(element.id.toString());
+                });
+print(list);
+                return DropdownSearch<String>(
+                    mode: Mode.MENU,
+                    showSelectedItems: true,
+                    items: carBrandsList,
+                    label: "Menu mode",
+                    hint: "country in menu mode",
+                    popupItemDisabled: (String s) => s.startsWith('I'),
+                    onChanged: print,
+                    selectedItem: "Brazil"
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
         ],
       ),
     );
