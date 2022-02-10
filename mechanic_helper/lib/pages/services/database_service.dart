@@ -4,7 +4,7 @@ import 'package:mechanic_helper/models/car_details_model.dart';
 
 class DatabaseService {
   CollectionReference carDetails =
-      FirebaseFirestore.instance.collection('car_details');
+  FirebaseFirestore.instance.collection('car_details');
   CollectionReference carBrands = FirebaseFirestore.instance.collection('cars');
 
   Future<void> addCarDetails(CarDetailsModel carDetailsModel) {
@@ -13,7 +13,12 @@ class DatabaseService {
         SetOptions(merge: true));
   }
 
-  Future<QuerySnapshot> getCarBrands() async{
+  Future<QuerySnapshot> getCarBrands() async {
     return await carBrands.get();
+  }
+
+  Future<QuerySnapshot> getCarModels(String selectedBrand) async{
+    return await FirebaseFirestore.instance.collection('cars').doc(selectedBrand.toLowerCase()).collection('models').get();
+
   }
 }

@@ -6,13 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/car_detail_container.dart';
-import 'package:mechanic_helper/constants.dart';
 import 'package:mechanic_helper/external_libs/open_container.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/edit_car_details/edit_car_details_screen.dart';
-import 'package:mechanic_helper/pages/services/database_service.dart';
 
 class Body extends StatelessWidget {
+  TextEditingController brandController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
