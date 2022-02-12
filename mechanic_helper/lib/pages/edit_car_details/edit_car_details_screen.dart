@@ -6,7 +6,24 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 
-class EditCarDetailsScreen extends StatelessWidget {
+
+class EditCarDetailsScreen extends StatefulWidget{
+
+  EditCarDetailsScreen();
+
+  @override
+  State<StatefulWidget> createState() => EditCarDetailsScreenState();
+
+}
+
+class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
+
+  List<String> carModelsList = [];
+  List<String> carBrandsList = [];
+  String selectedBrand = '';
+  String selectedModel = '';
+  CarDetailsModel carDetailsModel = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,67 +41,53 @@ class EditCarDetailsScreen extends StatelessWidget {
           SizedBox(height: 10),
           FutureBuilder<QuerySnapshot>(
             future: DatabaseService().getCarBrands(),
-            builder: (_, snapshotCarBrands) {
-              if (snapshotCarBrands.hasData) {
-                List<QueryDocumentSnapshot> list = snapshotCarBrands.data!.docs;
-                List<String> carBrandsList = [];
-                list.forEach((QueryDocumentSnapshot element) {
+            builder: (_, snapshotCarBrands){
+              if(snapshotCarBrands.hasData){
+                List<QueryDocumentSnapshot> queryDocs = snapshotCarBrands.data!.docs;
+                queryDocs.forEach((QueryDocumentSnapshot element) {
                   carBrandsList.add(element.id.toString());
                 });
-                print(list);
                 return StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance
+                  stream:FirebaseFirestore.instance
                       .collection("car_details")
                       .doc('${FirebaseAuth.instance.currentUser.email}')
                       .snapshots(),
-                  builder: (_, snapshot) {
-                    if (snapshot.hasData) {
+                  builder: (_,snapshot){
+                    if(snapshot.hasData){
                       var data = snapshot.data!.data();
-                      CarDetailsModel carDetails =
-                          CarDetailsModel.getCarDetails(data);
-                      String selectedBrand = carDetails.brand;
+                      carDetailsModel = CarDetailsModel.getCarDetails(data);
+                      selectedBrand = carDetailsModel.brand;
+                      selectedModel = carDetailsModel.model;
                       return Column(
                         children: [
-                          DropdownSearch<String>(
-                              mode: Mode.MENU,
-                              showSelectedItems: true,
-                              items: carBrandsList,
-                              label: "Brand",
-                              hint: "Car brand",
-                              popupItemDisabled: (String s) =>
-                                  s.startsWith('I'),
-                              onChanged: (String? str){
-                                selectedBrand = str!;
-                              },
-                              selectedItem: selectedBrand,
+                          DropdownSearch(
+                            mode:Mode.MENU,
+                            showSelectedItems: true,
+                            items:carBrandsList,
+                            label:'Brand',
+                            onChanged: (String? value){
+                              selectedBrand = value!;
+                              DatabaseService().getCarModelsList(carModelsList, selectedBrand);
+                              selectedModel = carModelsList.first.toLowerCase();
+                            },
+                            selectedItem: selectedBrand.toLowerCase(),
                           ),
                           SizedBox(height: 10,),
-                          FutureBuilder<QuerySnapshot>(
-                            future:DatabaseService().getCarModels(selectedBrand),
-                            builder: (_,carModelsSnapshot){
-                              if(carModelsSnapshot.hasData){
-                                List<String> list =[];
-                                List<QueryDocumentSnapshot> querySnapshotList = carModelsSnapshot.data!.docs;
-                                querySnapshotList.forEach((element) {
-                                  list.add(element.id.toString());
-                                });
-                                return DropdownSearch<String>(
-                                  mode: Mode.MENU,
-                                  showSelectedItems: true,
-                                  items: list,
-                                  selectedItem: list.first,
-                                  label: "Model",
-                                );
-                              }
-                              return const Center(child: CircularProgressIndicator());
-
+                          DropdownSearch(
+                            mode:Mode.MENU,
+                            items: carModelsList,
+                            label:'Model',
+                            showSelectedItems: true,
+                            selectedItem: selectedModel,
+                            onChanged: (String? value){
+                              selectedModel = value!;
                             },
                           ),
-
                         ],
                       );
                     }
                     return const Center(child: CircularProgressIndicator());
+
                   },
                 );
               }
@@ -94,5 +97,13 @@ class EditCarDetailsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+
+
+
+  @override
+  void initState(){
+    super.initState();
   }
 }
