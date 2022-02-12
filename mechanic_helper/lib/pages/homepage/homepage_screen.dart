@@ -10,7 +10,7 @@ class HomePageScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return Text("homepage");
+    return Body();
   }
 }
 
