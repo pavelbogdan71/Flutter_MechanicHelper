@@ -30,4 +30,15 @@ class DatabaseService {
     });
   }
 
+  Future<void> getServicePrice(CarDetailsModel carDetailsModel,String service,String priceVar) async{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('cars/'+carDetailsModel.brand.toLowerCase()+'/models/'+carDetailsModel.model.toLowerCase()+'/engine/'+carDetailsModel.engineSize+'/fuel/'+carDetailsModel.fuel.toLowerCase()+'/hp/'+carDetailsModel.hp+'/year').get();
+
+    final data = querySnapshot.docs;
+    for(int i=0;i<data.length;i++){
+      if(data[i].id==carDetailsModel.year){
+        priceVar = data[i].data()[service];
+      }
+    }
+    print(data);
+  }
 }
