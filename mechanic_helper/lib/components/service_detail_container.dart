@@ -30,12 +30,15 @@ class ServiceDetailContainer extends StatelessWidget {
         children: [
           Row(
             children: [
+              SizedBox(width: 5,),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Icon(Icons.arrow_back_sharp),
-                style: ElevatedButton.styleFrom(primary: kPrimaryColor),
+                style: ElevatedButton.styleFrom(
+                    primary: kPrimaryColor
+                ),
               ),
             ],
           ),
@@ -43,7 +46,7 @@ class ServiceDetailContainer extends StatelessWidget {
             height: 30,
           ),
           Container(
-            height: size.height*0.3,
+            height: size.height * 0.25,
             child: Image.asset(
               imagePath,
             ),
@@ -53,11 +56,7 @@ class ServiceDetailContainer extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(
-                top: 40,
-                left: 20,
-                right: 20
-              ),
+              padding: EdgeInsets.only(top: 40, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -70,42 +69,89 @@ class ServiceDetailContainer extends StatelessWidget {
                         color: Color(0xFFECEFF1)),
                   ),
                   Divider(
-                    color: Color(0xFF546E7A),),
-                  SizedBox(height:10),
-                  Text('Description',
-                    style: GoogleFonts.comfortaa(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      textStyle: Theme.of(context).textTheme.headline1,
-                      color: Color(0xFFECEFF1)),
+                    color: Color(0xFF546E7A),
                   ),
-                  SizedBox(height: 10,),
-                  Text(description,
+                  SizedBox(height: 10),
+                  Text(
+                    'Description',
+                    style: GoogleFonts.comfortaa(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        textStyle: Theme.of(context).textTheme.headline1,
+                        color: Color(0xFFECEFF1)),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    description,
                     style: GoogleFonts.comfortaa(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFFECEFF1)),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
-                      Icon(Icons.attach_money,
-                      color: Color(0xFFECEFF1),
+                      Icon(
+                        Icons.attach_money,
+                        color: Color(0xFFECEFF1),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       priceWidget,
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: [
-                      Icon(Icons.access_time,
-                      color: Color(0xFFECEFF1),
+                      Icon(
+                        Icons.access_time,
+                        color: Color(0xFFECEFF1),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       serviceTimeInHours
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Center(
+                      child: SizedBox(
+                    width: size.width * 0.5,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [Icon(Icons.add,
+                        color: kPrimaryColor,
+                        ),
+                          Text('Add appointment',
+                          style: GoogleFonts.comfortaa(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15
+                          ),)
+                        ],
+                      ),
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(color: Colors.white),
+                        )),
+                        backgroundColor: MaterialStateProperty.all(Colors.blueGrey.shade100)
+                      ),
+                    ),
+                  ))
                 ],
               ),
               width: double.infinity,
