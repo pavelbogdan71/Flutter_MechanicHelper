@@ -42,9 +42,11 @@ class ServiceDetailContainer extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          Image.asset(
-            imagePath,
-            width: size.height * 0.4,
+          Container(
+            height: size.height*0.3,
+            child: Image.asset(
+              imagePath,
+            ),
           ),
           SizedBox(
             height: 50,
