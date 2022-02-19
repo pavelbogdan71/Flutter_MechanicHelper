@@ -7,7 +7,7 @@ import 'package:mechanic_helper/pages/welcome/welcome_screen.dart';
 import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';
 import 'package:mechanic_helper/pages/principal/principal_screen.dart';
 import 'package:provider/provider.dart';
-import 'constants.dart';
+import 'constants/constants.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

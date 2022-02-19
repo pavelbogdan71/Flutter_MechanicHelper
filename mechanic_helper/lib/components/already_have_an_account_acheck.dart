@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/pages/Signup/signup_screen.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {

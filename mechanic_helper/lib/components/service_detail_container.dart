@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/constants/constants.dart';
+import 'package:mechanic_helper/constants/strings.dart';
 
 class ServiceDetailContainer extends StatelessWidget {
   final String imagePath;
   final Widget priceWidget;
   final String serviceType;
   final Widget serviceTimeInHours;
+  final String description;
 
   const ServiceDetailContainer(
       {Key? key,
       required this.imagePath,
       required this.priceWidget,
       required this.serviceType,
-      required this.serviceTimeInHours})
+      required this.serviceTimeInHours,
+      required this.description})
       : super(key: key);
 
   @override
@@ -41,7 +44,7 @@ class ServiceDetailContainer extends StatelessWidget {
           ),
           Image.asset(
             imagePath,
-            width: size.height * 0.2,
+            width: size.height * 0.4,
           ),
           SizedBox(
             height: 50,
@@ -75,16 +78,32 @@ class ServiceDetailContainer extends StatelessWidget {
                       color: Color(0xFFECEFF1)),
                   ),
                   SizedBox(height: 10,),
-                  Text('An Oil Change is the act of removing the used oil in your engine and replacing it with new, clean oil. Over time, oil breaks down and gets dirty. These factors make oil much less slippery and less effective at their job of lubricating engine parts.',
+                  Text(description,
                     style: GoogleFonts.comfortaa(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFFECEFF1)),
                   ),
                   SizedBox(height: 20,),
-                  priceWidget,
+                  Row(
+                    children: [
+                      Icon(Icons.attach_money,
+                      color: Color(0xFFECEFF1),
+                      ),
+                      SizedBox(width: 5,),
+                      priceWidget,
+                    ],
+                  ),
                   SizedBox(height: 10,),
-                  serviceTimeInHours
+                  Row(
+                    children: [
+                      Icon(Icons.access_time,
+                      color: Color(0xFFECEFF1),
+                      ),
+                      SizedBox(width: 5,),
+                      serviceTimeInHours
+                    ],
+                  )
                 ],
               ),
               width: double.infinity,

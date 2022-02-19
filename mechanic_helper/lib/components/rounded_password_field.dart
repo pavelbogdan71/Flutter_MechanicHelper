@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'text_field_container.dart';
-import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/constants/constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/service_detail_container.dart';
 import 'package:mechanic_helper/components/service_repair_category.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mechanic_helper/constants/strings.dart';
 import 'package:mechanic_helper/external_libs/open_container.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
@@ -33,11 +34,13 @@ class Body extends StatelessWidget {
               price = data[i].data()[service]['price'];
             }
           }
-          return Text('Price: ' +price + ' lei',
+          return Text(
+            'Price: ' + price + ' lei',
             style: GoogleFonts.comfortaa(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFFECEFF1)),);
+                color: Color(0xFFECEFF1)),
+          );
         }
         return const Center(child: CircularProgressIndicator());
       },
@@ -57,11 +60,13 @@ class Body extends StatelessWidget {
               time = data[i].data()[service]['time'];
             }
           }
-          return Text('Required time: '+ time + ' hours',
+          return Text(
+            'Required time: ' + time + ' hours',
             style: GoogleFonts.comfortaa(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFFECEFF1)),);
+                color: Color(0xFFECEFF1)),
+          );
         }
         return const Center(child: CircularProgressIndicator());
       },
@@ -117,74 +122,95 @@ class Body extends StatelessWidget {
                             openBuilder:
                                 (BuildContext context, VoidCallback _) =>
                                     ServiceDetailContainer(
-                              imagePath: "assets/images/oil_change.png",
+                              imagePath: oilChangeImagePath,
                               priceWidget: getRepairPriceFromDB(
-                                  carDetailsModel, 'oil_change'),
-                              serviceType: 'Oil Change',
+                                  carDetailsModel, oilChange),
+                              serviceType: oilChangeDetailsTitle,
                               serviceTimeInHours: getRepairTimeInHoursFromDB(
-                                  carDetailsModel, 'oil_change'),
+                                  carDetailsModel, oilChange),
+                                      description: oilChangeDescription,
                             ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
-                                  text: 'Oil change',
-                                  imagePath: "assets/images/oil_change.png");
+                                  text: oilChangeDetailsTitle,
+                                  imagePath: oilChangeHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
                             transitionDuration: Duration(milliseconds: 1500),
                           ),
-                          InkWell(
-                            child: const ServiceRepairCategory(
-                                text: 'Tire replacement',
-                                imagePath:
-                                    "assets/images/tire_replacement.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'tire_replacement'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                    ServiceDetailContainer(
+                              imagePath: tireReplacementImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, tireReplacement),
+                              serviceType: tireReplacementDetailsTitle,
+                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  carDetailsModel, tireReplacement),
+                                      description: tireReplacementDescription,
+                            ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: tireReplacementDetailsTitle,
+                                  imagePath: tireReplacementHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
-                          InkWell(
-                            child: const ServiceRepairCategory(
-                                text: 'Battery replacement',
-                                imagePath:
-                                    "assets/images/battery_replacement.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'battery_replacement'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                    ServiceDetailContainer(
+                              imagePath: batteryReplacementImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, batteryReplacement),
+                              serviceType: batteryReplacementDetailsTitle,
+                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  carDetailsModel, batteryReplacement),
+                                      description: batteryReplacementDescription,
+                            ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: batteryReplacementDetailsTitle,
+                                  imagePath:
+                                      batteryReplacementHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
-                          InkWell(
-                            child: ServiceRepairCategory(
-                                text: 'Brake repair',
-                                imagePath: "assets/images/brake_repair.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'brake_repair'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                    ServiceDetailContainer(
+                              imagePath: brakeRepairImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, brakeRepair),
+                              serviceType: brakeRepairDetailsTitle,
+                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  carDetailsModel, brakeRepair),
+                                      description: brakeRepairDescription,
+                            ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: brakeRepairDetailsTitle,
+                                  imagePath: brakeRepairHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
                         ],
                       ),
@@ -194,74 +220,101 @@ class Body extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          InkWell(
-                            child: const ServiceRepairCategory(
-                                text: 'Wheel balance',
-                                imagePath: "assets/images/wheel_balance.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'wheel_balance'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                    ServiceDetailContainer(
+                              imagePath: wheelBalanceImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, wheelBalance),
+                              serviceType: wheelBalanceDetailsTitle,
+                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  carDetailsModel, wheelBalance),
+                                      description: wheelBalanceDescription,
+                            ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: wheelBalanceDetailsTitle,
+                                  imagePath: wheelBalanceHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
-                          InkWell(
-                            child: const ServiceRepairCategory(
-                                text: 'Gearbox service',
-                                imagePath: "assets/images/gearbox_service.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'gearbox_service'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                ServiceDetailContainer(
+                                  imagePath: gearboxServiceImagePath,
+                                  priceWidget: getRepairPriceFromDB(
+                                      carDetailsModel, gearboxService),
+                                  serviceType: gearboxServiceDetailsTitle,
+                                  serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                      carDetailsModel, gearboxService),
+                                  description: gearboxServiceDescription,
+                                ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: gearboxServiceDetailsTitle,
+                                  imagePath: gearboxServiceHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
-                          InkWell(
-                            child: const ServiceRepairCategory(
-                                text: 'Suspension service',
-                                imagePath:
-                                    "assets/images/suspension_service.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'suspension_service'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                ServiceDetailContainer(
+                                  imagePath: suspensionServiceImagePath,
+                                  priceWidget: getRepairPriceFromDB(
+                                      carDetailsModel, suspensionService),
+                                  serviceType: suspensionServiceDetailsTitle,
+                                  serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                      carDetailsModel, suspensionService),
+                                  description: suspensionServiceDescription,
+                                ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: suspensionServiceDetailsTitle,
+                                  imagePath: suspensionServiceHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
-                          InkWell(
-                            child: const ServiceRepairCategory(
-                                text: 'Car check',
-                                imagePath: "assets/images/car_check.png"),
-                            onTap: () {
-                              AlertDialog alert = AlertDialog(
-                                title: Text('title'),
-                                content: getRepairPriceFromDB(
-                                    carDetailsModel, 'car_check'),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  });
+                          OpenContainer(
+                            closedColor: Colors.transparent,
+                            closedElevation: 0.0,
+                            openElevation: 4.0,
+                            openBuilder:
+                                (BuildContext context, VoidCallback _) =>
+                                ServiceDetailContainer(
+                                  imagePath: carCheckImagePath,
+                                  priceWidget: getRepairPriceFromDB(
+                                      carDetailsModel, carCheck),
+                                  serviceType: carCheckDetailsTitle,
+                                  serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                      carDetailsModel, carCheck),
+                                  description: carCheckDescription,
+                                ),
+                            closedBuilder:
+                                (BuildContext context, VoidCallback _) {
+                              return const ServiceRepairCategory(
+                                  text: carCheckDetailsTitle,
+                                  imagePath: carCheckHomepageImagePath);
                             },
+                            transitionType: ContainerTransitionType.fadeThrough,
+                            transitionDuration: Duration(milliseconds: 1500),
                           ),
                         ],
                       ),

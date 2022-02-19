@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/pages/car_details/car_details_screen.dart';
 import 'package:mechanic_helper/pages/history/history_screen.dart';
 import 'package:mechanic_helper/pages/homepage/homepage_screen.dart';

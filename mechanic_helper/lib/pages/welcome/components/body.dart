@@ -4,7 +4,7 @@ import 'package:mechanic_helper/pages/login/login_screen.dart';
 import 'package:mechanic_helper/pages/signup/signup_screen.dart';
 import 'package:mechanic_helper/pages/welcome/components/background.dart';
 import 'package:mechanic_helper/components/rounded_button.dart';
-import 'package:mechanic_helper/constants.dart';
+import 'package:mechanic_helper/constants/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
