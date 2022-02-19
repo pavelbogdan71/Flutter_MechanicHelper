@@ -12,6 +12,25 @@ class Body extends StatelessWidget {
   CarDetailsModel carDetailsModel = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
   String oilChangePrice='';
 
+  Widget getRepairPriceFromDB(CarDetailsModel carDetailsModel,String service){
+    return FutureBuilder<QuerySnapshot>(
+      future: DatabaseService().getServicePrice(carDetailsModel),
+      builder: (_,snapshot){
+        if(snapshot.hasData){
+          var data = snapshot.data!.docs;
+          String price='';
+          for(int i=0;i<data.length;i++){
+            if(data[i].id==carDetailsModel.year){
+              price = data[i].data()[service];
+            }
+          }
+          return Text(price);
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,7 +44,6 @@ class Body extends StatelessWidget {
           if(snapshot.hasData){
             var data = snapshot.data!.data();
             carDetailsModel = CarDetailsModel.getCarDetails(data);
-            DatabaseService().getServicePrice(carDetailsModel, 'oil_change',oilChangePrice);
 
             return Column(
               children: [
@@ -61,6 +79,7 @@ class Body extends StatelessWidget {
                             onTap: (){
                               AlertDialog alert = AlertDialog(
                                 title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'oil_change'),
                               );
                               showDialog(
                                   context: context,
@@ -70,39 +89,137 @@ class Body extends StatelessWidget {
                               );
                             },
                           ),
-                          ServiceRepairCategory(
-                              text: 'Tire replacement',
-                              imagePath: "assets/images/tire_replacement.png"
+                          InkWell(
+                            child: const ServiceRepairCategory(
+                                text: 'Tire replacement',
+                                imagePath: "assets/images/tire_replacement.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'tire_replacement'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
-                          ServiceRepairCategory(
-                              text: 'Battery replacement',
-                              imagePath: "assets/images/battery_replacement.png"
+                          InkWell(
+                            child: const ServiceRepairCategory(
+                                text: 'Battery replacement',
+                                imagePath: "assets/images/battery_replacement.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'battery_replacement'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
-                          ServiceRepairCategory(
-                              text: 'Brake repair',
-                              imagePath: "assets/images/brake_repair.png"
+                          InkWell(
+                            child: ServiceRepairCategory(
+                                text: 'Brake repair',
+                                imagePath: "assets/images/brake_repair.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'brake_repair'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
                         ],
                       ),
                       SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          ServiceRepairCategory(
-                              text: 'Wheel balance',
-                              imagePath: "assets/images/wheel_balance.png"
+                        children:  [
+                          InkWell(
+                            child: const ServiceRepairCategory(
+                                text: 'Wheel balance',
+                                imagePath: "assets/images/wheel_balance.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'wheel_balance'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
-                          ServiceRepairCategory(
-                              text: 'Gearbox service',
-                              imagePath: "assets/images/gearbox_service.png"
+                          InkWell(
+                            child: const ServiceRepairCategory(
+                                text: 'Gearbox service',
+                                imagePath: "assets/images/gearbox_service.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'gearbox_service'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
-                          ServiceRepairCategory(
-                              text: 'Suspension service',
-                              imagePath: "assets/images/suspension_service.png"
+                          InkWell(
+                            child: const ServiceRepairCategory(
+                                text: 'Suspension service',
+                                imagePath: "assets/images/suspension_service.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'suspension_service'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
-                          ServiceRepairCategory(
-                              text: 'Car check',
-                              imagePath: "assets/images/car_check.png"
+                          InkWell(
+                            child: const ServiceRepairCategory(
+                                text: 'Car check',
+                                imagePath: "assets/images/car_check.png"
+                            ),
+                            onTap: (){
+                              AlertDialog alert = AlertDialog(
+                                title: Text('title'),
+                                content:getRepairPriceFromDB(carDetailsModel,'car_check'),
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return alert;
+                                  }
+                              );
+                            },
                           ),
                         ],
                       ),
