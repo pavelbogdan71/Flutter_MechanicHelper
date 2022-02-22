@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/constants/strings.dart';
+import 'package:mechanic_helper/pages/appointment/appointment_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ServiceDetailContainer extends StatelessWidget {
   final String imagePath;
@@ -127,7 +129,15 @@ class ServiceDetailContainer extends StatelessWidget {
                       child: SizedBox(
                     width: size.width * 0.5,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                              child: AppointmentScreen(),
+                              type: PageTransitionType.bottomToTop
+                          )
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [Icon(Icons.add,
