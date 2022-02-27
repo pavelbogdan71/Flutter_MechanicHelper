@@ -146,7 +146,7 @@ class BodyState extends State<Body> {
                                   imagePath: oilChangeHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                           OpenContainer(
                             closedColor: Colors.transparent,
@@ -172,7 +172,7 @@ class BodyState extends State<Body> {
                                   imagePath: tireReplacementHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                           OpenContainer(
                             closedColor: Colors.transparent,
@@ -199,7 +199,7 @@ class BodyState extends State<Body> {
                                       batteryReplacementHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                           OpenContainer(
                             closedColor: Colors.transparent,
@@ -225,7 +225,7 @@ class BodyState extends State<Body> {
                                   imagePath: brakeRepairHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                         ],
                       ),
@@ -259,7 +259,7 @@ class BodyState extends State<Body> {
                                   imagePath: wheelBalanceHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                           OpenContainer(
                             closedColor: Colors.transparent,
@@ -285,7 +285,7 @@ class BodyState extends State<Body> {
                                   imagePath: gearboxServiceHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                           OpenContainer(
                             closedColor: Colors.transparent,
@@ -311,7 +311,7 @@ class BodyState extends State<Body> {
                                   imagePath: suspensionServiceHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                           OpenContainer(
                             closedColor: Colors.transparent,
@@ -337,7 +337,7 @@ class BodyState extends State<Body> {
                                   imagePath: carCheckHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
-                            transitionDuration: Duration(milliseconds: 1500),
+                            transitionDuration: Duration(milliseconds: 1000),
                           ),
                         ],
                       ),

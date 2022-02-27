@@ -2,7 +2,8 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/constants/constants.dart';
-import 'package:time_range/time_range.dart';
+
+import '../../external_libs/time_range.dart';
 
 
 class AppointmentScreen extends StatefulWidget{
@@ -22,9 +23,33 @@ class AppointmentScreenState extends State<AppointmentScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
+  int daysToPick = 30;
 
   AppointmentScreenState(this.serviceHours);
 
+  List<DateTime> getWeekendDays(){
+    List<DateTime> weekendDays=[];
+    for(int i=0;i<=daysToPick;i++){
+      DateTime date = DateTime.now().add(Duration(days: i));
+      if(date.weekday==6 || date.weekday==7){
+        weekendDays.add(date);
+      }
+    }
+
+    return weekendDays;
+  }
+
+  DateTime getInitalSelectedDate(){
+    DateTime now = DateTime.now();
+    if(now.weekday==6){
+      return DateTime.now().add(Duration(days: 2));
+    }
+    if(now.weekday==7){
+      return DateTime.now().add(Duration(days: 1));
+    }
+
+    return now;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +59,18 @@ class AppointmentScreenState extends State<AppointmentScreen> {
             children: [
               DatePicker(
                 DateTime.now(),
-                initialSelectedDate: DateTime.now(),
+                initialSelectedDate: getInitalSelectedDate(),
                 selectionColor: kPrimaryColor,
                 selectedTextColor: Colors.white,
                 onDateChange: (date) {
                   // New date selected
                   setState(() {
                     selectedDate = date;
+                    print(selectedDate);
                   });
                 },
+                daysCount: daysToPick,
+                inactiveDates:getWeekendDays(),
               ),
               TimeRange(
                 fromTitle: Text('From', style: TextStyle(fontSize: 18, color: Colors.grey),),
