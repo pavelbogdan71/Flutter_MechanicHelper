@@ -6,18 +6,24 @@ import 'package:time_range/time_range.dart';
 
 
 class AppointmentScreen extends StatefulWidget{
+  final int serviceHours;
 
+  const AppointmentScreen({Key? key, required this.serviceHours}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => AppointmentScreenState();
+  State<StatefulWidget> createState() => AppointmentScreenState(serviceHours);
 
 }
 
 class AppointmentScreenState extends State<AppointmentScreen> {
 
+  final int serviceHours;
+
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
+
+  AppointmentScreenState(this.serviceHours);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                 firstTime: TimeOfDay(hour: 8, minute: 00),
                 lastTime: TimeOfDay(hour: 18, minute: 00),
                 timeStep: 30,
-                timeBlock: 30,
+                timeBlock: serviceHours*60,
                 onRangeCompleted: (range){
                   setState(() {
                     startTime = range!.start;

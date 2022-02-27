@@ -10,7 +10,12 @@ import 'package:mechanic_helper/external_libs/open_container.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() =>BodyState();
+}
+
+class BodyState extends State<Body> {
   CarDetailsModel carDetailsModel = CarDetailsModel(
       brand: '',
       engineSize: '',
@@ -21,6 +26,7 @@ class Body extends StatelessWidget {
       vin: '',
       year: '');
   String oilChangePrice = '';
+  int timeForRepair = 0;
 
   Widget getRepairPriceFromDB(CarDetailsModel carDetailsModel, String service) {
     return FutureBuilder<QuerySnapshot>(
@@ -60,6 +66,7 @@ class Body extends StatelessWidget {
               time = data[i].data()[service]['time'];
             }
           }
+            timeForRepair = int.parse(time);
           return Text(
             'Required time: ' + time + ' hours',
             style: GoogleFonts.comfortaa(
@@ -130,6 +137,7 @@ class Body extends StatelessWidget {
                               serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, oilChange),
                                       description: oilChangeDescription,
+                                      timeForRepair: timeForRepair,
                             ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -154,7 +162,9 @@ class Body extends StatelessWidget {
                               serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, tireReplacement),
                                       description: tireReplacementDescription,
-                            ),
+                                      timeForRepair: timeForRepair,
+
+                                    ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -178,7 +188,9 @@ class Body extends StatelessWidget {
                               serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, batteryReplacement),
                                       description: batteryReplacementDescription,
-                            ),
+                                      timeForRepair: timeForRepair,
+
+                                    ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -203,7 +215,9 @@ class Body extends StatelessWidget {
                               serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, brakeRepair),
                                       description: brakeRepairDescription,
-                            ),
+                                      timeForRepair: timeForRepair,
+
+                                    ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -235,7 +249,9 @@ class Body extends StatelessWidget {
                               serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, wheelBalance),
                                       description: wheelBalanceDescription,
-                            ),
+                                      timeForRepair: timeForRepair,
+
+                                    ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -259,6 +275,8 @@ class Body extends StatelessWidget {
                                   serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, gearboxService),
                                   description: gearboxServiceDescription,
+                                  timeForRepair: timeForRepair,
+
                                 ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -283,6 +301,8 @@ class Body extends StatelessWidget {
                                   serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, suspensionService),
                                   description: suspensionServiceDescription,
+                                  timeForRepair: timeForRepair,
+
                                 ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -307,6 +327,8 @@ class Body extends StatelessWidget {
                                   serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, carCheck),
                                   description: carCheckDescription,
+                                  timeForRepair: timeForRepair,
+
                                 ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {

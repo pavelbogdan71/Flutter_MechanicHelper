@@ -12,6 +12,7 @@ class ServiceDetailContainer extends StatelessWidget {
   final String serviceType;
   final Widget serviceTimeInHours;
   final String description;
+  final int timeForRepair;
 
   const ServiceDetailContainer(
       {Key? key,
@@ -19,7 +20,8 @@ class ServiceDetailContainer extends StatelessWidget {
       required this.priceWidget,
       required this.serviceType,
       required this.serviceTimeInHours,
-      required this.description,})
+      required this.description,
+        required this.timeForRepair,})
       : super(key: key);
 
   @override
@@ -134,6 +136,7 @@ class ServiceDetailContainer extends StatelessWidget {
                             context,
                             PageTransition(
                                 child: AppointmentScreen(
+                                  serviceHours: timeForRepair,
                                 ),
                                 type: PageTransitionType.bottomToTop));
                       },
