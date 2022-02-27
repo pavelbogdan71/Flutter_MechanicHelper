@@ -19,7 +19,7 @@ class ServiceDetailContainer extends StatelessWidget {
       required this.priceWidget,
       required this.serviceType,
       required this.serviceTimeInHours,
-      required this.description})
+      required this.description,})
       : super(key: key);
 
   @override
@@ -32,15 +32,15 @@ class ServiceDetailContainer extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(width: 5,),
+              SizedBox(
+                width: 5,
+              ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Icon(Icons.arrow_back_sharp),
-                style: ElevatedButton.styleFrom(
-                    primary: kPrimaryColor
-                ),
+                style: ElevatedButton.styleFrom(primary: kPrimaryColor),
               ),
             ],
           ),
@@ -131,35 +131,37 @@ class ServiceDetailContainer extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                          context,
-                          PageTransition(
-                              child: AppointmentScreen(),
-                              type: PageTransitionType.bottomToTop
-                          )
-                        );
+                            context,
+                            PageTransition(
+                                child: AppointmentScreen(
+                                ),
+                                type: PageTransitionType.bottomToTop));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.add,
-                        color: kPrimaryColor,
-                        ),
-                          Text('Add appointment',
-                          style: GoogleFonts.comfortaa(
+                        children: [
+                          Icon(
+                            Icons.add,
                             color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15
-                          ),)
+                          ),
+                          Text(
+                            'Add appointment',
+                            style: GoogleFonts.comfortaa(
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          )
                         ],
                       ),
                       style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.white),
-                        )),
-                        backgroundColor: MaterialStateProperty.all(Colors.blueGrey.shade100)
-                      ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Colors.white),
+                          )),
+                          backgroundColor: MaterialStateProperty.all(
+                              Colors.blueGrey.shade100)),
                     ),
                   ))
                 ],

@@ -47,7 +47,7 @@ class Body extends StatelessWidget {
     );
   }
 
-  Widget getRepairTimeInHoursFromDB(
+  Widget getWidgetRepairTimeInHoursFromDB(
       CarDetailsModel carDetailsModel, String service) {
     return FutureBuilder<QuerySnapshot>(
       future: DatabaseService().getServicePrice(carDetailsModel),
@@ -72,6 +72,7 @@ class Body extends StatelessWidget {
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +127,7 @@ class Body extends StatelessWidget {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, oilChange),
                               serviceType: oilChangeDetailsTitle,
-                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, oilChange),
                                       description: oilChangeDescription,
                             ),
@@ -150,7 +151,7 @@ class Body extends StatelessWidget {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, tireReplacement),
                               serviceType: tireReplacementDetailsTitle,
-                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, tireReplacement),
                                       description: tireReplacementDescription,
                             ),
@@ -174,7 +175,7 @@ class Body extends StatelessWidget {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, batteryReplacement),
                               serviceType: batteryReplacementDetailsTitle,
-                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, batteryReplacement),
                                       description: batteryReplacementDescription,
                             ),
@@ -199,7 +200,7 @@ class Body extends StatelessWidget {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, brakeRepair),
                               serviceType: brakeRepairDetailsTitle,
-                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, brakeRepair),
                                       description: brakeRepairDescription,
                             ),
@@ -231,7 +232,7 @@ class Body extends StatelessWidget {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, wheelBalance),
                               serviceType: wheelBalanceDetailsTitle,
-                              serviceTimeInHours: getRepairTimeInHoursFromDB(
+                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                   carDetailsModel, wheelBalance),
                                       description: wheelBalanceDescription,
                             ),
@@ -255,7 +256,7 @@ class Body extends StatelessWidget {
                                   priceWidget: getRepairPriceFromDB(
                                       carDetailsModel, gearboxService),
                                   serviceType: gearboxServiceDetailsTitle,
-                                  serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, gearboxService),
                                   description: gearboxServiceDescription,
                                 ),
@@ -279,7 +280,7 @@ class Body extends StatelessWidget {
                                   priceWidget: getRepairPriceFromDB(
                                       carDetailsModel, suspensionService),
                                   serviceType: suspensionServiceDetailsTitle,
-                                  serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, suspensionService),
                                   description: suspensionServiceDescription,
                                 ),
@@ -303,7 +304,7 @@ class Body extends StatelessWidget {
                                   priceWidget: getRepairPriceFromDB(
                                       carDetailsModel, carCheck),
                                   serviceType: carCheckDetailsTitle,
-                                  serviceTimeInHours: getRepairTimeInHoursFromDB(
+                                  serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, carCheck),
                                   description: carCheckDescription,
                                 ),

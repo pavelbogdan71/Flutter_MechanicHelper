@@ -1,62 +1,65 @@
-import 'package:date_time_picker/date_time_picker.dart';
-import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mechanic_helper/constants/constants.dart';
+import 'package:time_range/time_range.dart';
 
-class AppointmentScreen extends StatelessWidget{
+
+class AppointmentScreen extends StatefulWidget{
+
+
+  @override
+  State<StatefulWidget> createState() => AppointmentScreenState();
+
+}
+
+class AppointmentScreenState extends State<AppointmentScreen> {
+
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay startTime = TimeOfDay.now();
+  TimeOfDay endTime = TimeOfDay.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
           color: Colors.white,
-          child:Column(
+          child: Column(
             children: [
-              DateTimePicker(
-                type: DateTimePickerType.dateTimeSeparate,
-                dateMask: 'd MMM, yyyy',
-                initialValue: DateTime.now().toString(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2100),
-                icon: Icon(Icons.event),
-                dateLabelText: 'Date',
-                timeLabelText: "Hour",
-                selectableDayPredicate: (date) {
-                  // Disable weekend days to select from the calendar
-                  if (date.weekday == 6 || date.weekday == 7) {
-                    return false;
-                  }
-                  return true;
+              DatePicker(
+                DateTime.now(),
+                initialSelectedDate: DateTime.now(),
+                selectionColor: kPrimaryColor,
+                selectedTextColor: Colors.white,
+                onDateChange: (date) {
+                  // New date selected
+                  setState(() {
+                    selectedDate = date;
+                  });
                 },
-                onChanged: (val) => print(val),
-                validator: (val) {
-                  print(val);
-                  return null;
-                },
-                onSaved: (val) => print(val),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    showPicker(
-                      context: context,
-                      onChange: (TimeOfDay ) {  },
-                      value: TimeOfDay(hour: 12, minute: 0),
-                      minHour: 8,
-                      maxHour: 18,
-                      is24HrFormat: true
-                    ),
-                  );
-                },
-                child: Text(
-                  "Open time picker",
-                  style: TextStyle(color: Colors.white),
-                ),
+              TimeRange(
+                fromTitle: Text('From', style: TextStyle(fontSize: 18, color: Colors.grey),),
+                toTitle: Text('To', style: TextStyle(fontSize: 18, color: Colors.grey),),
+                titlePadding: 20,
+                textStyle: TextStyle(fontWeight: FontWeight.normal, color: Colors.black87),
+                activeTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                borderColor: Colors.black,
+                backgroundColor: Colors.transparent,
+                activeBackgroundColor: kPrimaryColor,
+                firstTime: TimeOfDay(hour: 8, minute: 00),
+                lastTime: TimeOfDay(hour: 18, minute: 00),
+                timeStep: 30,
+                timeBlock: 30,
+                onRangeCompleted: (range){
+                  setState(() {
+                    startTime = range!.start;
+                    endTime = range.end;
+                  });
+                }
               ),
             ],
-          )
-      ),
+          )),
     );
-
   }
-
 }

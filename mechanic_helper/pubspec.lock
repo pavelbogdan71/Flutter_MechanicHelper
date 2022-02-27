@@ -78,20 +78,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  date_time_picker:
+  date_picker_timeline:
     dependency: "direct main"
     description:
-      name: date_time_picker
+      name: date_picker_timeline
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
-  day_night_time_picker:
-    dependency: "direct main"
-    description:
-      name: day_night_time_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.5"
+    version: "1.2.1"
   dropdown_search:
     dependency: "direct main"
     description:
@@ -462,6 +455,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  time_range:
+    dependency: "direct main"
+    description:
+      name: time_range
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   typed_data:
     dependency: transitive
     description:
