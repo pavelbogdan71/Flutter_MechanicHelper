@@ -2,6 +2,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/constants/constants.dart';
+import 'package:mechanic_helper/pages/services/database_service.dart';
 
 import '../../external_libs/time_range.dart';
 
@@ -20,7 +21,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
 
   final int serviceHours;
 
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = getInitalSelectedDate();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
   int daysToPick = 30;
@@ -39,7 +40,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
     return weekendDays;
   }
 
-  DateTime getInitalSelectedDate(){
+  static DateTime getInitalSelectedDate(){
     DateTime now = DateTime.now();
     if(now.weekday==6){
       return DateTime.now().add(Duration(days: 2));
@@ -47,7 +48,6 @@ class AppointmentScreenState extends State<AppointmentScreen> {
     if(now.weekday==7){
       return DateTime.now().add(Duration(days: 1));
     }
-
     return now;
   }
   @override
@@ -92,6 +92,11 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                   });
                 }
               ),
+              ElevatedButton(
+                  onPressed: (){
+                    DatabaseService().addAppointment(selectedDate,startTime,endTime);
+                  },
+                  child: Icon(Icons.add))
             ],
           )),
     );

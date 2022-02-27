@@ -1,16 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 
 class DatabaseService {
-  CollectionReference carDetails =
-  FirebaseFirestore.instance.collection('car_details');
+  CollectionReference carDetails = FirebaseFirestore.instance.collection('car_details');
   CollectionReference carBrandsRef = FirebaseFirestore.instance.collection('cars');
 
   Future<void> addCarDetails(CarDetailsModel carDetailsModel) {
     return carDetails.doc('${FirebaseAuth.instance.currentUser.email}').set(
         CarDetailsModel.carDetailsToMap(carDetailsModel),
         SetOptions(merge: true));
+  }
+
+  Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime){
+    return FirebaseFirestore.instance.collection('appointments').doc('mechanic1').update(
+        {
+          selectedTime.year.toString()+'-'+selectedTime.month.toString()+'-'+selectedTime.day.toString(): {
+            'startTime': startTime.toString(),
+            'endTime':endTime.toString()
+          }
+        });
   }
 
   Future<QuerySnapshot> getCarBrands() async {
