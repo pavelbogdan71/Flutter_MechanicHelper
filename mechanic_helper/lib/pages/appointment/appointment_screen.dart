@@ -31,6 +31,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
   int daysToPick = 30;
+  bool canDoAppointment = false;
 
   AppointmentScreenState(this.serviceHours, this.carDetailsModel);
 
@@ -59,7 +60,9 @@ class AppointmentScreenState extends State<AppointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -71,116 +74,130 @@ class AppointmentScreenState extends State<AppointmentScreen> {
             child: Center(
               child: Container(
                 height: size.height / 2,
+                width: size.width - 5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                  SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
                     SizedBox(
-                      height: 20,
+                      width: 20,
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Appointment",
-                          style: GoogleFonts.comfortaa(
-                              fontSize: 30, color: kPrimaryColor),
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
+                    Text(
+                      "Appointment",
+                      style: GoogleFonts.comfortaa(
+                          fontSize: 30, color: kPrimaryColor),
+                      textAlign: TextAlign.start,
                     ),
-                    Divider(
-                      color: kPrimaryColor,
-                      indent: 15,
-                      endIndent: 15,
+                  ],
+                ),
+                Divider(
+                  color: kPrimaryColor,
+                  indent: 15,
+                  endIndent: 15,
+                ),
+                DatePicker(
+                  DateTime.now(),
+                  initialSelectedDate: getInitalSelectedDate(),
+                  selectionColor: kPrimaryColor,
+                  selectedTextColor: Colors.white,
+                  onDateChange: (date) {
+                    // New date selected
+                    setState(() {
+                      selectedDate = date;
+                      print(selectedDate);
+                    });
+                  },
+                  daysCount: daysToPick,
+                  inactiveDates: getWeekendDays(),
+                ),
+                TimeRange(
+                    fromTitle: Text(
+                      'From',
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    DatePicker(
-                      DateTime.now(),
-                      initialSelectedDate: getInitalSelectedDate(),
-                      selectionColor: kPrimaryColor,
-                      selectedTextColor: Colors.white,
-                      onDateChange: (date) {
-                        // New date selected
-                        setState(() {
-                          selectedDate = date;
-                          print(selectedDate);
-                        });
-                      },
-                      daysCount: daysToPick,
-                      inactiveDates: getWeekendDays(),
+                    toTitle: Text(
+                      'To',
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    TimeRange(
-                        fromTitle: Text(
-                          'From',
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
-                        toTitle: Text(
-                          'To',
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
-                        titlePadding: 20,
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black87),
-                        activeTextStyle: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                        borderColor: Colors.black,
-                        backgroundColor: Colors.transparent,
-                        activeBackgroundColor: kPrimaryColor,
-                        firstTime: TimeOfDay(hour: 8, minute: 00),
-                        lastTime: TimeOfDay(hour: 18, minute: 00),
-                        timeStep: 30,
-                        timeBlock: serviceHours * 60,
-                        onRangeCompleted: (range) {
-                          setState(() {
-                            startTime = range!.start;
-                            endTime = range.end;
-                          });
-                        }),
-                    SizedBox(height: 5,),
-                    Center(
-                      child: SizedBox(
-                        width: size.width*0.6,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              DatabaseService().addAppointment(selectedDate,
-                                  startTime, endTime, carDetailsModel);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.add,
-                                    color: kPrimaryLightColor
-                                ),
-                                Text("Create appointment",
-                                  style: GoogleFonts.comfortaa(
-                                      color: kPrimaryLightColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                )
-                              ],
+                    titlePadding: 20,
+                    textStyle: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black87),
+                    activeTextStyle: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                    borderColor: Colors.black,
+                    backgroundColor: Colors.transparent,
+                    activeBackgroundColor: kPrimaryColor,
+                    firstTime: TimeOfDay(hour: 8, minute: 00),
+                    lastTime: TimeOfDay(hour: 18, minute: 00),
+                    timeStep: 30,
+                    timeBlock: serviceHours * 60,
+                    onRangeCompleted: (range) {
+                      setState(() {
+                        startTime = range!.start;
+                        endTime = range.end;
+                        canDoAppointment = true;
+                      });
+                    }),
+                SizedBox(height: 5,),
+                Center(
+                  child: SizedBox(
+                      width: size.width * 0.6,
+                      child: ElevatedButton(
+                        onPressed: canDoAppointment ? () {
+                          DatabaseService().addAppointment(selectedDate,
+                              startTime, endTime, carDetailsModel);
+                        } : null,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add,
+                                color: kPrimaryLightColor
                             ),
-                          style: ButtonStyle(
-                              shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    side: BorderSide(color: Colors.white),
-                                  )),
-                              backgroundColor: MaterialStateProperty.all(
-                                  kPrimaryColor)),
+                            Text("Create appointment",
+                              style: GoogleFonts.comfortaa(
+                                  color: kPrimaryLightColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            )
+                          ],
+                        ),
+                        style: ButtonStyle(
+                          shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide(color: Colors.white),
+                              )),
+                          backgroundColor: MaterialStateProperty.resolveWith<
+                              Color>(
+                                  (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .primary;
+                                }
+                                if (states.contains(MaterialState.disabled)) {
+                                  return Colors.blueGrey.shade200;
+                                }
+                                return kPrimaryColor;
+                              }),
                         ),
                       )
-                    )
-
+                  )
+                ),
                   ],
                 ),
                 decoration: BoxDecoration(
-                    border: Border.all(color: kPrimaryColor),
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    color: kPrimaryLightColor,
+                  border: Border.all(color: kPrimaryColor),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  color: kPrimaryLightColor,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey,
