@@ -14,11 +14,16 @@ class DatabaseService {
   }
 
   Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime){
+    DateTime now = DateTime.now();
+    String stringDateNow = now.year.toString()+'-'+ now.month.toString()+'-'+now.day.toString()+' '+now.hour.toString()+':'+now.minute.toString()+':'+now.second.toString()+'-'+now.millisecond.toString()+now.microsecond.toString();
+
     return FirebaseFirestore.instance.collection('appointments').doc('mechanic1').update(
         {
-          selectedTime.year.toString()+'-'+selectedTime.month.toString()+'-'+selectedTime.day.toString(): {
+          stringDateNow: <String,dynamic>{
             'startTime': startTime.toString(),
-            'endTime':endTime.toString()
+            'endTime':endTime.toString(),
+            'client':'${FirebaseAuth.instance.currentUser.email}',
+            'day':selectedTime.year.toString()+'-'+selectedTime.month.toString()+'-'+selectedTime.day.toString()
           }
         });
   }
