@@ -23,7 +23,7 @@ class ServiceDetailContainer extends StatelessWidget {
       required this.serviceType,
       required this.serviceTimeInHours,
       required this.description,
-        required this.timeForRepair,
+      required this.timeForRepair,
       required this.carDetailsModel})
       : super(key: key);
 
