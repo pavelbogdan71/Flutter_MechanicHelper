@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
+import 'package:mechanic_helper/pages/services/datetime_service.dart';
 
 class DatabaseService {
   CollectionReference carDetails = FirebaseFirestore.instance.collection('car_details');
@@ -13,17 +14,16 @@ class DatabaseService {
         SetOptions(merge: true));
   }
 
-  Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime){
-    DateTime now = DateTime.now();
-    String stringDateNow = now.year.toString()+'-'+ now.month.toString()+'-'+now.day.toString()+' '+now.hour.toString()+':'+now.minute.toString()+':'+now.second.toString()+'-'+now.millisecond.toString()+now.microsecond.toString();
+  Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime,CarDetailsModel carDetailsModel){
 
     return FirebaseFirestore.instance.collection('appointments').doc('mechanic1').update(
         {
-          stringDateNow: <String,dynamic>{
-            'startTime': startTime.toString(),
-            'endTime':endTime.toString(),
+          DateTimeService.dateTimeToString(DateTime.now()): <String,dynamic>{
+            'startTime': DateTimeService.timeOfDayToString(startTime),
+            'endTime':DateTimeService.timeOfDayToString(endTime),
             'client':'${FirebaseAuth.instance.currentUser.email}',
-            'day':selectedTime.year.toString()+'-'+selectedTime.month.toString()+'-'+selectedTime.day.toString()
+            'day':selectedTime.year.toString()+'-'+DateTimeService.twoDigits(selectedTime.month)+'-'+DateTimeService.twoDigits(selectedTime.day),
+            'carDetails':CarDetailsModel.carDetailsToMap(carDetailsModel)
           }
         });
   }

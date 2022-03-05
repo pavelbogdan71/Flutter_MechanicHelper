@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/constants/strings.dart';
+import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/appointment/appointment_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -13,6 +14,7 @@ class ServiceDetailContainer extends StatelessWidget {
   final Widget serviceTimeInHours;
   final String description;
   final int timeForRepair;
+  final CarDetailsModel carDetailsModel;
 
   const ServiceDetailContainer(
       {Key? key,
@@ -21,7 +23,8 @@ class ServiceDetailContainer extends StatelessWidget {
       required this.serviceType,
       required this.serviceTimeInHours,
       required this.description,
-        required this.timeForRepair,})
+        required this.timeForRepair,
+      required this.carDetailsModel})
       : super(key: key);
 
   @override
@@ -137,6 +140,7 @@ class ServiceDetailContainer extends StatelessWidget {
                             PageTransition(
                                 child: AppointmentScreen(
                                   serviceHours: timeForRepair,
+                                  carDetailsModel: carDetailsModel,
                                 ),
                                 type: PageTransitionType.bottomToTop));
                       },

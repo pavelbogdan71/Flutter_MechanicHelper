@@ -138,6 +138,7 @@ class BodyState extends State<Body> {
                                   carDetailsModel, oilChange),
                                       description: oilChangeDescription,
                                       timeForRepair: timeForRepair,
+                                      carDetailsModel: carDetailsModel,
                             ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -163,7 +164,7 @@ class BodyState extends State<Body> {
                                   carDetailsModel, tireReplacement),
                                       description: tireReplacementDescription,
                                       timeForRepair: timeForRepair,
-
+                                      carDetailsModel: carDetailsModel,
                                     ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -189,7 +190,7 @@ class BodyState extends State<Body> {
                                   carDetailsModel, batteryReplacement),
                                       description: batteryReplacementDescription,
                                       timeForRepair: timeForRepair,
-
+                                      carDetailsModel: carDetailsModel,
                                     ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -216,7 +217,7 @@ class BodyState extends State<Body> {
                                   carDetailsModel, brakeRepair),
                                       description: brakeRepairDescription,
                                       timeForRepair: timeForRepair,
-
+                                      carDetailsModel: carDetailsModel,
                                     ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -250,7 +251,7 @@ class BodyState extends State<Body> {
                                   carDetailsModel, wheelBalance),
                                       description: wheelBalanceDescription,
                                       timeForRepair: timeForRepair,
-
+                                      carDetailsModel: carDetailsModel,
                                     ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -276,7 +277,7 @@ class BodyState extends State<Body> {
                                       carDetailsModel, gearboxService),
                                   description: gearboxServiceDescription,
                                   timeForRepair: timeForRepair,
-
+                                  carDetailsModel: carDetailsModel,
                                 ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -302,7 +303,7 @@ class BodyState extends State<Body> {
                                       carDetailsModel, suspensionService),
                                   description: suspensionServiceDescription,
                                   timeForRepair: timeForRepair,
-
+                                  carDetailsModel: carDetailsModel,
                                 ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -328,7 +329,7 @@ class BodyState extends State<Body> {
                                       carDetailsModel, carCheck),
                                   description: carCheckDescription,
                                   timeForRepair: timeForRepair,
-
+                                  carDetailsModel: carDetailsModel,
                                 ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {

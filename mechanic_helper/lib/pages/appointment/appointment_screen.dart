@@ -2,6 +2,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mechanic_helper/constants/constants.dart';
+import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 
 import '../../external_libs/time_range.dart';
@@ -9,24 +10,27 @@ import '../../external_libs/time_range.dart';
 
 class AppointmentScreen extends StatefulWidget{
   final int serviceHours;
+  final CarDetailsModel carDetailsModel;
 
-  const AppointmentScreen({Key? key, required this.serviceHours}) : super(key: key);
+  const AppointmentScreen({Key? key, required this.serviceHours,required this.carDetailsModel}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => AppointmentScreenState(serviceHours);
+  State<StatefulWidget> createState() => AppointmentScreenState(serviceHours,carDetailsModel);
 
 }
 
 class AppointmentScreenState extends State<AppointmentScreen> {
 
   final int serviceHours;
+  final CarDetailsModel carDetailsModel;
+
 
   DateTime selectedDate = getInitalSelectedDate();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
   int daysToPick = 30;
 
-  AppointmentScreenState(this.serviceHours);
+  AppointmentScreenState(this.serviceHours,this.carDetailsModel);
 
   List<DateTime> getWeekendDays(){
     List<DateTime> weekendDays=[];
@@ -94,7 +98,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
               ),
               ElevatedButton(
                   onPressed: (){
-                    DatabaseService().addAppointment(selectedDate,startTime,endTime);
+                    DatabaseService().addAppointment(selectedDate,startTime,endTime,carDetailsModel);
                   },
                   child: Icon(Icons.add))
             ],
