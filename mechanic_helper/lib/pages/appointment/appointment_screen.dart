@@ -13,19 +13,21 @@ import '../../external_libs/time_range.dart';
 class AppointmentScreen extends StatefulWidget {
   final int serviceHours;
   final CarDetailsModel carDetailsModel;
+  final String serviceType;
 
   const AppointmentScreen(
-      {Key? key, required this.serviceHours, required this.carDetailsModel})
+      {Key? key, required this.serviceHours, required this.carDetailsModel,required this.serviceType})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
-      AppointmentScreenState(serviceHours, carDetailsModel);
+      AppointmentScreenState(serviceHours, carDetailsModel,serviceType);
 }
 
 class AppointmentScreenState extends State<AppointmentScreen> {
   final int serviceHours;
   final CarDetailsModel carDetailsModel;
+  final String serviceType;
 
   DateTime selectedDate = getInitalSelectedDate();
   TimeOfDay startTime = TimeOfDay.now();
@@ -33,7 +35,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
   int daysToPick = 30;
   bool canDoAppointment = false;
 
-  AppointmentScreenState(this.serviceHours, this.carDetailsModel);
+  AppointmentScreenState(this.serviceHours, this.carDetailsModel,this.serviceType);
 
   List<DateTime> getWeekendDays() {
     List<DateTime> weekendDays = [];
@@ -73,7 +75,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
             ),
             child: Center(
               child: Container(
-                height: size.height / 2,
+                height: size.height / 1.9,
                 width: size.width - 5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -151,7 +153,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                       child: ElevatedButton(
                         onPressed: canDoAppointment ? () {
                           DatabaseService().addAppointment(selectedDate,
-                              startTime, endTime, carDetailsModel);
+                              startTime, endTime, carDetailsModel,serviceType);
                         } : null,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

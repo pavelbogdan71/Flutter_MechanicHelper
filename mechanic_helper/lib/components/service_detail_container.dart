@@ -141,6 +141,7 @@ class ServiceDetailContainer extends StatelessWidget {
                                 child: AppointmentScreen(
                                   serviceHours: timeForRepair,
                                   carDetailsModel: carDetailsModel,
+                                  serviceType: serviceType,
                                 ),
                                 type: PageTransitionType.bottomToTop));
                       },

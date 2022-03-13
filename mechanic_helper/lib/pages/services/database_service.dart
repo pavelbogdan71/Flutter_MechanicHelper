@@ -14,7 +14,7 @@ class DatabaseService {
         SetOptions(merge: true));
   }
 
-  Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime,CarDetailsModel carDetailsModel){
+  Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime,CarDetailsModel carDetailsModel,String serviceType){
 
     return FirebaseFirestore.instance.collection('appointments').doc('mechanic1').update(
         {
@@ -23,9 +23,16 @@ class DatabaseService {
             'endTime':DateTimeService.timeOfDayToString(endTime),
             'client':'${FirebaseAuth.instance.currentUser.email}',
             'day':selectedTime.year.toString()+'-'+DateTimeService.twoDigits(selectedTime.month)+'-'+DateTimeService.twoDigits(selectedTime.day),
-            'carDetails':CarDetailsModel.carDetailsToMap(carDetailsModel)
+            'carDetails':CarDetailsModel.carDetailsToMap(carDetailsModel),
+            'serviceType':serviceType
           }
         });
+  }
+
+  Stream<DocumentSnapshot> getAppointments(){
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('appointments').doc('mechanic1');
+
+    return documentReference.snapshots();
   }
 
   Future<QuerySnapshot> getCarBrands() async {
