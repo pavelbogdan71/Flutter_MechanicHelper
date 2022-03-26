@@ -6,8 +6,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/history_service_detail_container.dart';
 import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-class Body extends StatelessWidget {
+
+class Body extends StatefulWidget{
+  @override
+  BodyState createState() => BodyState();
+}
+
+class BodyState extends State<Body> {
+  String aa='a';
+  List<HistoryServiceDetailContainer> historyList = [];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -30,6 +40,7 @@ class Body extends StatelessWidget {
                       textStyle: Theme.of(context).textTheme.headline1),
                 ),
               ),
+              Text(aa),
               Expanded(
                 child: Container(
                   width: size.width,
@@ -39,13 +50,26 @@ class Body extends StatelessWidget {
                       SizedBox(
                         height: 30,
                       ),
+                      ToggleSwitch(
+                        minWidth: 120.0,
+                        initialLabelIndex: 1,
+                        cornerRadius: 20.0,
+                        activeFgColor: Colors.white,
+                        inactiveBgColor: Colors.grey,
+                        inactiveFgColor: Colors.white,
+                        totalSwitches: 2,
+                        labels: ['Upcoming', 'FInished'],
+                        icons: [Icons.add, Icons.remove],
+                        activeBgColors: [[Colors.blue],[Colors.pink]],
+                        onToggle: (index) {
+
+                        },
+                      ),
                       StreamBuilder<DocumentSnapshot>(
                           stream: DatabaseService().getAppointments(),
                           builder: (_, snapshot) {
                             if (snapshot.hasData) {
                               var data = snapshot.data!.data();
-                              List<HistoryServiceDetailContainer> historyList =
-                                  [];
                               data.forEach((key, value) {
                                 if (value['client'].toString() ==
                                     '${FirebaseAuth.instance.currentUser.email}') {
