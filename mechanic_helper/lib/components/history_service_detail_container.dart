@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/constants/constants.dart';
+import 'package:mechanic_helper/external_libs/open_container.dart';
 
 import '../constants/strings.dart';
 
@@ -29,65 +30,74 @@ class HistoryServiceDetailContainer extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(height: 10,),
-        Container(
-          width: size.width*0.85,
-          child: Row(
+        SizedBox(
+          height: 10,
+        ),
+        OpenContainer(
+          closedBuilder: (BuildContext context, VoidCallback _) => Column(
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                  left: 20
-                ),
-                width: size.width*0.23,
-                height: size.height*0.1,
-                child: Image.asset(getImagePathByServiceType(serviceType)),
-              ),
-              Expanded(
-                child: Column(
+                width: size.width * 0.85,
+                child: Row(
                   children: [
-                    SizedBox(height: 10,),
-                    Text(
-                        serviceType,
-                      style: GoogleFonts.comfortaa(
-                          fontWeight: FontWeight.w900,
-                          color: Colors.grey.shade900,
-                          fontSize: 16,
-                          textStyle: Theme.of(context).textTheme.headline1),
+                    Container(
+                      padding: const EdgeInsets.only(left: 20),
+                      width: size.width * 0.23,
+                      height: size.height * 0.1,
+                      child:
+                          Image.asset(getImagePathByServiceType(serviceType)),
                     ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(date),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(startTime+'-'+endTime),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(carBrand+' '+carModel),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            serviceType,
+                            style: GoogleFonts.comfortaa(
+                                fontWeight: FontWeight.w900,
+                                color: Colors.grey.shade900,
+                                fontSize: 16,
+                                textStyle:
+                                    Theme.of(context).textTheme.headline1),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(date),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(startTime + '-' + endTime),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(carBrand + ' ' + carModel),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
+                decoration: const BoxDecoration(
+                  color: Color(0xFFECEFF1),
+                ),
+              ),
             ],
           ),
-          decoration: const BoxDecoration(
-            color: kPrimaryLightColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xFF546E7A),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: Offset(0, 3),
-              )
-            ],
-          ),
+          openBuilder: (BuildContext context, VoidCallback _) => Text("asd"),
+          closedShape:
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+              ),
+          closedElevation: 20,
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
       ],
     );
   }
