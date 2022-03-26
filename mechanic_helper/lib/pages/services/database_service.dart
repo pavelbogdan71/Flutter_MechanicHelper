@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mechanic_helper/enums/appointment_status_enum.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/datetime_service.dart';
 
@@ -24,7 +25,8 @@ class DatabaseService {
             'client':'${FirebaseAuth.instance.currentUser.email}',
             'day':selectedTime.year.toString()+'-'+DateTimeService.twoDigits(selectedTime.month)+'-'+DateTimeService.twoDigits(selectedTime.day),
             'carDetails':CarDetailsModel.carDetailsToMap(carDetailsModel),
-            'serviceType':serviceType
+            'serviceType':serviceType,
+            'status':AppointmentStatusEnum.upcoming.name
           }
         });
   }

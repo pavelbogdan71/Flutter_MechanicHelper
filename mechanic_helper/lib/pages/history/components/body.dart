@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/history_service_detail_container.dart';
 import 'package:mechanic_helper/constants/constants.dart';
+import 'package:mechanic_helper/enums/appointment_status_enum.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -15,8 +16,9 @@ class Body extends StatefulWidget{
 }
 
 class BodyState extends State<Body> {
-  String aa='a';
-  List<HistoryServiceDetailContainer> historyList = [];
+  List<HistoryServiceDetailContainer> historyListUpcoming = [];
+  List<HistoryServiceDetailContainer> historyListFinished = [];
+  int menuIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,6 @@ class BodyState extends State<Body> {
                       textStyle: Theme.of(context).textTheme.headline1),
                 ),
               ),
-              Text(aa),
               Expanded(
                 child: Container(
                   width: size.width,
@@ -52,7 +53,7 @@ class BodyState extends State<Body> {
                       ),
                       ToggleSwitch(
                         minWidth: 120.0,
-                        initialLabelIndex: 1,
+                        initialLabelIndex: menuIndex,
                         cornerRadius: 20.0,
                         activeFgColor: Colors.white,
                         inactiveBgColor: Colors.grey,
@@ -62,35 +63,54 @@ class BodyState extends State<Body> {
                         icons: [Icons.add, Icons.remove],
                         activeBgColors: [[Colors.blue],[Colors.pink]],
                         onToggle: (index) {
-
+                          setState(() {
+                            menuIndex = index!;
+                          });
+                          print(index);
                         },
                       ),
+                      SizedBox(height: 10,),
                       StreamBuilder<DocumentSnapshot>(
                           stream: DatabaseService().getAppointments(),
                           builder: (_, snapshot) {
                             if (snapshot.hasData) {
                               var data = snapshot.data!.data();
+                              historyListFinished.clear();
+                              historyListUpcoming.clear();
                               data.forEach((key, value) {
                                 if (value['client'].toString() ==
                                     '${FirebaseAuth.instance.currentUser.email}') {
-                                  historyList.add(HistoryServiceDetailContainer(
-                                      date: value['day'],
-                                      startTime: value['startTime'],
-                                      endTime: value['endTime'],
-                                      serviceType:
-                                          value['serviceType'].toString(),
-                                      carBrand: value['carDetails']['brand'],
-                                      carModel: value['carDetails']['model']));
+                                  if(value['status'].toString()==AppointmentStatusEnum.upcoming.name){
+                                    historyListUpcoming.add(HistoryServiceDetailContainer(
+                                        date: value['day'],
+                                        startTime: value['startTime'],
+                                        endTime: value['endTime'],
+                                        serviceType:
+                                        value['serviceType'].toString(),
+                                        carBrand: value['carDetails']['brand'],
+                                        carModel: value['carDetails']['model']));
+                                  }
+                                  if(value['status'].toString()==AppointmentStatusEnum.finished.name){
+                                    historyListFinished.add(HistoryServiceDetailContainer(
+                                        date: value['day'],
+                                        startTime: value['startTime'],
+                                        endTime: value['endTime'],
+                                        serviceType:
+                                        value['serviceType'].toString(),
+                                        carBrand: value['carDetails']['brand'],
+                                        carModel: value['carDetails']['model']));
+                                  }
+
                                 }
                               });
                               return Expanded(
                                   child: Container(
                                   width: size.width,
-                                  child: Expanded(
+                                  child: Container(
                                     child: SingleChildScrollView(
                                       physics: BouncingScrollPhysics(),
                                       child: Column(
-                                      children: historyList,
+                                      children: menuIndex==0?historyListUpcoming:historyListFinished,
                                     ),
                                   ),
                                 ),
