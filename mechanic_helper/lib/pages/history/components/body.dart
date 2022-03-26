@@ -20,6 +20,16 @@ class BodyState extends State<Body> {
   List<HistoryServiceDetailContainer> historyListFinished = [];
   int menuIndex = 0;
 
+  void sortListByDate(List<HistoryServiceDetailContainer> list){
+      //list.sort((a,b)=>a.date.compareTo(b.date));
+    list.sort((a, b) {
+      if(a.date==b.date){
+        return a.startTime.compareTo(b.startTime);
+      }
+      return a.date.compareTo(b.date);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -102,7 +112,11 @@ class BodyState extends State<Body> {
                                   }
 
                                 }
-                              });
+                              }
+                              );
+                              sortListByDate(historyListUpcoming);
+                              sortListByDate(historyListFinished);
+
                               return Expanded(
                                   child: Container(
                                   width: size.width,
