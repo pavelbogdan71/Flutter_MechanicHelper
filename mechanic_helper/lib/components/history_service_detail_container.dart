@@ -5,14 +5,17 @@ import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/external_libs/open_container.dart';
 
 import '../constants/strings.dart';
+import '../enums/appointment_status_enum.dart';
+import '../models/car_details_model.dart';
+import 'history_service_detail_popup_container.dart';
 
 class HistoryServiceDetailContainer extends StatelessWidget {
   final String date;
   final String startTime;
   final String endTime;
   final String serviceType;
-  final String carBrand;
-  final String carModel;
+  final AppointmentStatusEnum status;
+  final CarDetailsModel carDetailsModel;
 
   const HistoryServiceDetailContainer(
       {Key? key,
@@ -20,8 +23,8 @@ class HistoryServiceDetailContainer extends StatelessWidget {
       required this.startTime,
       required this.endTime,
       required this.serviceType,
-      required this.carBrand,
-      required this.carModel})
+      required this.status,
+       required this.carDetailsModel})
       : super(key: key);
 
   @override
@@ -73,7 +76,7 @@ class HistoryServiceDetailContainer extends StatelessWidget {
                           SizedBox(
                             height: 3,
                           ),
-                          Text(carBrand + ' ' + carModel),
+                          Text(carDetailsModel.brand + ' ' + carDetailsModel.model),
                           SizedBox(
                             height: 20,
                           ),
@@ -88,12 +91,20 @@ class HistoryServiceDetailContainer extends StatelessWidget {
               ),
             ],
           ),
-          openBuilder: (BuildContext context, VoidCallback _) => Text("asd"),
-          closedShape:
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-              ),
+          openBuilder: (BuildContext context, VoidCallback _) =>
+              HistoryServiceDetailPopupContainer(
+                  date: date,
+                  startTime: startTime,
+                  endTime: endTime,
+                  serviceType: serviceType,
+                  status: status,
+                  carDetailsModel: carDetailsModel,),
+          closedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           closedElevation: 20,
+          openColor: Colors.transparent,
+          transitionType: ContainerTransitionType.fade,
         ),
         SizedBox(
           height: 10,

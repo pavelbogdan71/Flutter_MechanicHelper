@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mechanic_helper/components/history_service_detail_container.dart';
 import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/enums/appointment_status_enum.dart';
+import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -62,14 +63,14 @@ class BodyState extends State<Body> {
                         height: 30,
                       ),
                       ToggleSwitch(
-                        minWidth: 120.0,
+                        minWidth: 150.0,
                         initialLabelIndex: menuIndex,
                         cornerRadius: 20.0,
                         activeFgColor: Colors.white,
                         inactiveBgColor: Colors.grey,
                         inactiveFgColor: Colors.white,
                         totalSwitches: 2,
-                        labels: ['Upcoming', 'FInished'],
+                        labels: ['Upcoming ('+historyListUpcoming.length.toString() + ')', 'Finished (' +historyListFinished.length.toString() +')'],
                         icons: [Icons.forward, Icons.done_all],
                         activeBgColors: [[Colors.blue],[Colors.green]],
                         onToggle: (index) {
@@ -96,8 +97,9 @@ class BodyState extends State<Body> {
                                         endTime: value['endTime'],
                                         serviceType:
                                         value['serviceType'].toString(),
-                                        carBrand: value['carDetails']['brand'],
-                                        carModel: value['carDetails']['model']));
+                                        status: AppointmentStatusEnum.upcoming,
+                                        carDetailsModel: CarDetailsModel.getCarDetails(value['carDetails']),
+                                    ));
                                   }
                                   if(value['status'].toString()==AppointmentStatusEnum.finished.name){
                                     historyListFinished.add(HistoryServiceDetailContainer(
@@ -106,8 +108,9 @@ class BodyState extends State<Body> {
                                         endTime: value['endTime'],
                                         serviceType:
                                         value['serviceType'].toString(),
-                                        carBrand: value['carDetails']['brand'],
-                                        carModel: value['carDetails']['model']));
+                                        status: AppointmentStatusEnum.finished,
+                                        carDetailsModel: CarDetailsModel.getCarDetails(value['carDetails']),
+                                    ));
                                   }
 
                                 }
@@ -116,6 +119,12 @@ class BodyState extends State<Body> {
                               sortListByDate(historyListUpcoming);
                               sortListByDate(historyListFinished);
 
+                              Future.delayed(Duration.zero, () async {
+                                setState(() {
+                                  historyListUpcoming;
+                                  historyListFinished;
+                                });
+                              });
                               return Expanded(
                                   child: Container(
                                   width: size.width,
