@@ -70,13 +70,12 @@ class BodyState extends State<Body> {
                         inactiveFgColor: Colors.white,
                         totalSwitches: 2,
                         labels: ['Upcoming', 'FInished'],
-                        icons: [Icons.add, Icons.remove],
-                        activeBgColors: [[Colors.blue],[Colors.pink]],
+                        icons: [Icons.forward, Icons.done_all],
+                        activeBgColors: [[Colors.blue],[Colors.green]],
                         onToggle: (index) {
                           setState(() {
                             menuIndex = index!;
                           });
-                          print(index);
                         },
                       ),
                       SizedBox(height: 10,),
