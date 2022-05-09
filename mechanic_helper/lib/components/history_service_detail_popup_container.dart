@@ -34,7 +34,10 @@ class HistoryServiceDetailPopupContainer extends StatelessWidget {
 
     return Column(
       children: [
+          Container(
+            child: Text('ass'),
 
+          )
       ],
     );
   }

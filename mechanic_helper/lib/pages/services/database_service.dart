@@ -54,6 +54,42 @@ class DatabaseService {
     });
   }
 
+  Future<void> getCarEngineList(List<String> list,String selectedBrand, String selectedModel) async{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('cars').doc(selectedBrand.toLowerCase()).collection('models').doc(selectedModel.toLowerCase()).collection("engine").get();
+    final data = querySnapshot.docs.map((e) => e.id).toList();
+    list.clear();
+    data.forEach((element) {
+      list.add(element.toString());
+    });
+  }
+
+  Future<void> getCarFuelTypeList(List<String> list, String selectedBrand, String selectedModel,String selectedEngine) async{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('cars').doc(selectedBrand.toLowerCase()).collection('models').doc(selectedModel.toLowerCase()).collection("engine").doc(selectedEngine.toLowerCase()).collection("fuel").get();
+    final data = querySnapshot.docs.map((e) => e.id).toList();
+    list.clear();
+    data.forEach((element) {
+      list.add(element.toString());
+    });
+  }
+
+  Future<void> getCarHpList(List<String> list, String selectedBrand, String selectedModel,String selectedEngine,String selectedFuelType) async{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('cars').doc(selectedBrand.toLowerCase()).collection('models').doc(selectedModel.toLowerCase()).collection("engine").doc(selectedEngine.toLowerCase()).collection("fuel").doc(selectedFuelType).collection("hp").get();
+    final data = querySnapshot.docs.map((e) => e.id).toList();
+    list.clear();
+    data.forEach((element) {
+      list.add(element.toString());
+    });
+  }
+
+  Future<void> getCarYearList(List<String> list, String selectedBrand, String selectedModel,String selectedEngine,String selectedFuelType,String selectedHp) async{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('cars').doc(selectedBrand.toLowerCase()).collection('models').doc(selectedModel.toLowerCase()).collection("engine").doc(selectedEngine.toLowerCase()).collection("fuel").doc(selectedFuelType).collection("hp").doc(selectedHp).collection("year").get();
+    final data = querySnapshot.docs.map((e) => e.id).toList();
+    list.clear();
+    data.forEach((element) {
+      list.add(element.toString());
+    });
+  }
+
   Future<QuerySnapshot> getServicePrice(CarDetailsModel carDetailsModel) async{
     return await FirebaseFirestore.instance.collection('cars/'+carDetailsModel.brand.toLowerCase()+'/models/'+carDetailsModel.model.toLowerCase()+'/engine/'+carDetailsModel.engineSize+'/fuel/'+carDetailsModel.fuel.toLowerCase()+'/hp/'+carDetailsModel.hp+'/year').get();
   }

@@ -103,7 +103,7 @@ class HistoryServiceDetailContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           closedElevation: 20,
-          openColor: Colors.transparent,
+          openColor: Colors.white,
           transitionType: ContainerTransitionType.fade,
         ),
         SizedBox(

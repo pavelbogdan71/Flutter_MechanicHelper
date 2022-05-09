@@ -98,6 +98,30 @@ class Body extends StatelessWidget {
                         CarDetailsModel carDetails =
                             CarDetailsModel.getCarDetails(data);
 
+                        if(carDetails.brand.isEmpty || carDetails.model.isEmpty){
+                          return Container(
+                            child: Row(
+                              children: [
+                                Text("You dont have a car added"),
+                                OpenContainer(
+                                  closedColor: Colors.blue,
+                                  closedElevation: 0.0,
+                                  openElevation: 4.0,
+                                  openBuilder: (BuildContext context, VoidCallback _) =>
+                                      EditCarDetailsScreen(),
+                                  closedBuilder: (BuildContext context, VoidCallback _) {
+                                    return Icon(
+                                      Icons.add,
+                                      color: Colors.grey.shade200,
+                                    );
+                                  },
+                                  transitionType: ContainerTransitionType.fadeThrough,
+                                  transitionDuration: Duration(milliseconds: 1500),
+                                ),
+                            ],
+                            ),
+                          );
+                        }
                         return Column(
                           children: [
                             SizedBox(

@@ -6,6 +6,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 
+import '../../components/rounded_input_field.dart';
+
 
 class EditCarDetailsScreen extends StatefulWidget{
 
@@ -20,8 +22,18 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
 
   List<String> carModelsList = [];
   List<String> carBrandsList = [];
+  List<String> carEngineList = [];
+  List<String> carFuelTypeList = [];
+  List<String> carHpList = [];
+  List<String> carYearList = [];
+
   String selectedBrand = '';
   String selectedModel = '';
+  String selectedEngine = '';
+  String selectedFuelType = '';
+  String selectedHp = '';
+  String selectedYear = '';
+
   CarDetailsModel carDetailsModel = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
 
   @override
@@ -56,8 +68,6 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
                     if(snapshot.hasData){
                       var data = snapshot.data!.data();
                       carDetailsModel = CarDetailsModel.getCarDetails(data);
-                      selectedBrand = carDetailsModel.brand;
-                      selectedModel = carDetailsModel.model;
                       return Column(
                         children: [
                           DropdownSearch(
@@ -66,9 +76,11 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
                             items:carBrandsList,
                             label:'Brand',
                             onChanged: (String? value){
-                              selectedBrand = value!;
-                              DatabaseService().getCarModelsList(carModelsList, selectedBrand);
-                              selectedModel = carModelsList.first.toLowerCase();
+                              setState(() {
+                                selectedBrand = value!;
+                                DatabaseService().getCarModelsList(carModelsList, selectedBrand);
+                                selectedModel = carModelsList.first.toLowerCase();
+                              });
                             },
                             selectedItem: selectedBrand.toLowerCase(),
                           ),
@@ -80,9 +92,78 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
                             showSelectedItems: true,
                             selectedItem: selectedModel,
                             onChanged: (String? value){
-                              selectedModel = value!;
+                              setState(() {
+                                selectedModel = value!;
+                                DatabaseService().getCarEngineList(carEngineList, selectedBrand, selectedModel);
+                                selectedEngine = carEngineList.first.toLowerCase();
+                              });
                             },
                           ),
+                          SizedBox(height: 10,),
+                          DropdownSearch(
+                            mode:Mode.MENU,
+                            items: carEngineList,
+                            label:'Engine',
+                            showSelectedItems: true,
+                            selectedItem: selectedEngine,
+                            onChanged: (String? value){
+                              setState(() {
+                                selectedEngine = value!;
+                                DatabaseService().getCarFuelTypeList(carFuelTypeList, selectedBrand, selectedModel, selectedEngine);
+                                selectedFuelType = carFuelTypeList.first.toLowerCase();
+                              });
+                            },
+                          ),
+                          SizedBox(height: 10,),
+                          DropdownSearch(
+                            mode:Mode.MENU,
+                            items: carFuelTypeList,
+                            label:'Fuel type',
+                            showSelectedItems: true,
+                            selectedItem: selectedFuelType,
+                            onChanged: (String? value){
+                              setState(() {
+                                selectedFuelType = value!;
+                                DatabaseService().getCarHpList(carHpList, selectedBrand, selectedModel, selectedEngine, selectedFuelType);
+                                selectedHp = carHpList.first.toLowerCase();
+                              });
+                            },
+                          ),
+                          SizedBox(height: 10,),
+                          DropdownSearch(
+                            mode:Mode.MENU,
+                            items: carHpList,
+                            label:'Hp',
+                            showSelectedItems: true,
+                            selectedItem: selectedHp,
+                            onChanged: (String? value){
+                              setState(() {
+                                selectedHp = value!;
+                                DatabaseService().getCarYearList(carYearList, selectedBrand, selectedModel, selectedEngine, selectedFuelType, selectedHp);
+                              });
+                            },
+                          ),
+                          SizedBox(height: 10,),
+                          DropdownSearch(
+                            mode:Mode.MENU,
+                            items: carYearList,
+                            label:'Year',
+                            showSelectedItems: true,
+                            selectedItem: selectedYear,
+                            onChanged: (String? value){
+                              selectedYear = value!;
+                            },
+                          ),
+                          SizedBox(height: 10,),
+                          Text("Kilometers"),
+                          TextFormField(
+
+                          ),
+                          SizedBox(height: 10,),
+                          Text("VIN"),
+                          TextFormField(
+
+                          )
                         ],
                       );
                     }
