@@ -20,10 +20,11 @@ class BodyState extends State<Body> {
   TextEditingController brandController = new TextEditingController();
 
   List<CarDetailsModel> carDetailsModelList = [];
-  CarDetailsModel selectedCarDetails = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
+
+  List<List<Color>> activeBgColors = [];
 
   int menuIndex = 0;
-  int listSize = 2;
+  int listSize = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -107,8 +108,13 @@ class BodyState extends State<Body> {
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
                         List<QueryDocumentSnapshot> queryDocs = snapshot.data!.docs;
+                        carDetailsModelList.clear();
+                        activeBgColors.clear();
+                        var i=0;
                         queryDocs.forEach((element) {
+                          activeBgColors.add(i%2==0?[Colors.blue]:[Colors.green]);
                           carDetailsModelList.add(CarDetailsModel.getCarDetails(element.data()));
+                          i++;
                         });
 
                         if(carDetailsModelList.length==0){
@@ -136,120 +142,120 @@ class BodyState extends State<Body> {
                           );
                         }
 
-                        selectedCarDetails = carDetailsModelList[0];
-                        return Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                ToggleSwitch(
-                                  minWidth: 150.0,
-                                  initialLabelIndex: menuIndex,
-                                  cornerRadius: 20.0,
-                                  activeFgColor: Colors.white,
-                                  inactiveBgColor: Colors.grey,
-                                  inactiveFgColor: Colors.white,
-                                  totalSwitches: listSize,
-                                  labels: carDetailsModelList.map((e) => e.brand.toUpperCase()+' '+e.model.toUpperCase()).toList(),
-                                  icons: [Icons.forward, Icons.done_all],
-                                  activeBgColors: [[Colors.blue],[Colors.green]],
-                                  onToggle: (index) {
-                                    setState(() {
-                                      selectedCarDetails = carDetailsModelList[index!];
-                                      menuIndex = index;
-                                    });
-                                  },
-                                ),
-                              ],
-                              mainAxisSize: MainAxisSize.min,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].brand,
-                                    icon: Icon(
-                                      Icons.directions_car_filled,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "Brand"),
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].model,
-                                    icon: Icon(
-                                      Icons.car_rental,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "Model"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].year,
-                                    icon: Icon(
-                                      Icons.calendar_today_rounded,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "Year"),
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].km,
-                                    icon: Icon(
-                                      Icons.double_arrow_rounded,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "Kilometers"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].engineSize,
-                                    icon: Icon(
-                                      Icons.miscellaneous_services,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "Engine size"),
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].vin,
-                                    icon: Icon(
-                                      Icons.document_scanner,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "VIN"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].fuel,
-                                    icon: Icon(
-                                      Icons.local_gas_station_rounded,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "Fuel type"),
-                                CarDetailContainer(
-                                    content: carDetailsModelList[menuIndex].hp,
-                                    icon: Icon(
-                                      Icons.speed,
-                                      color: Colors.blueGrey.shade900,
-                                    ),
-                                    title: "HP"),
-                              ],
-                            ),
-                          ],
-                        );
+                        if(carDetailsModelList.isNotEmpty){
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  ToggleSwitch(
+                                    minWidth: 150.0,
+                                    initialLabelIndex: menuIndex,
+                                    cornerRadius: 20.0,
+                                    activeFgColor: Colors.white,
+                                    inactiveBgColor: Colors.grey,
+                                    inactiveFgColor: Colors.white,
+                                    totalSwitches: carDetailsModelList.length,
+                                    labels: carDetailsModelList.map((e) => e.brand.toUpperCase()+' '+e.model.toUpperCase()).toList(),
+                                    activeBgColors: activeBgColors,
+                                    onToggle: (index) {
+                                      setState(() {
+                                        menuIndex = index!;
+                                      });
+                                    },
+                                  ),
+                                ],
+                                mainAxisSize: MainAxisSize.min,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].brand,
+                                      icon: Icon(
+                                        Icons.directions_car_filled,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "Brand"),
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].model,
+                                      icon: Icon(
+                                        Icons.car_rental,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "Model"),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].year,
+                                      icon: Icon(
+                                        Icons.calendar_today_rounded,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "Year"),
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].km,
+                                      icon: Icon(
+                                        Icons.double_arrow_rounded,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "Kilometers"),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].engineSize,
+                                      icon: Icon(
+                                        Icons.miscellaneous_services,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "Engine size"),
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].vin,
+                                      icon: Icon(
+                                        Icons.document_scanner,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "VIN"),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].fuel,
+                                      icon: Icon(
+                                        Icons.local_gas_station_rounded,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "Fuel type"),
+                                  CarDetailContainer(
+                                      content: carDetailsModelList[menuIndex].hp,
+                                      icon: Icon(
+                                        Icons.speed,
+                                        color: Colors.blueGrey.shade900,
+                                      ),
+                                      title: "HP"),
+                                ],
+                              ),
+                            ],
+                          );
+                        }
+
                       }
                       return const Center(child: CircularProgressIndicator());
                     },
