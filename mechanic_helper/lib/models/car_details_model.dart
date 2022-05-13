@@ -18,7 +18,6 @@ class CarDetailsModel{
     required this.vin,
     required this.year});
 
-
   static CarDetailsModel getCarDetails(Map<String, dynamic> data){
     return CarDetailsModel(
         brand: data['brand'],

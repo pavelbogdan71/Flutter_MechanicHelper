@@ -9,9 +9,21 @@ import 'package:mechanic_helper/components/car_detail_container.dart';
 import 'package:mechanic_helper/external_libs/open_container.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/edit_car_details/edit_car_details_screen.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget{
+  @override
+  BodyState createState() =>BodyState();
+}
+
+class BodyState extends State<Body> {
   TextEditingController brandController = new TextEditingController();
+
+  List<CarDetailsModel> carDetailsModelList = [];
+  CarDetailsModel selectedCarDetails = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
+
+  int menuIndex = 0;
+  int listSize = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +79,7 @@ class Body extends StatelessWidget {
               child: Image.asset(
                 "assets/images/car.png",
                 width: size.width * 0.90,
-                height: size.height * 0.2,
+                height: size.height * 0.13,
               ),
             ),
           ),
@@ -87,18 +99,19 @@ class Body extends StatelessWidget {
                   ]),
               child: Column(
                 children: [
-                  StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
+                  FutureBuilder<QuerySnapshot>(
+                    future: FirebaseFirestore.instance
                         .collection("car_details")
-                        .doc('${FirebaseAuth.instance.currentUser.email}')
-                        .snapshots(),
+                        .doc('${FirebaseAuth.instance.currentUser.email}').collection('cars')
+                        .get(),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
-                        var data = snapshot.data!.data();
-                        CarDetailsModel carDetails =
-                            CarDetailsModel.getCarDetails(data);
+                        List<QueryDocumentSnapshot> queryDocs = snapshot.data!.docs;
+                        queryDocs.forEach((element) {
+                          carDetailsModelList.add(CarDetailsModel.getCarDetails(element.data()));
+                        });
 
-                        if(carDetails.brand.isEmpty || carDetails.model.isEmpty){
+                        if(carDetailsModelList.length==0){
                           return Container(
                             child: Row(
                               children: [
@@ -118,28 +131,56 @@ class Body extends StatelessWidget {
                                   transitionType: ContainerTransitionType.fadeThrough,
                                   transitionDuration: Duration(milliseconds: 1500),
                                 ),
-                            ],
+                              ],
                             ),
                           );
                         }
+
+                        selectedCarDetails = carDetailsModelList[0];
                         return Column(
                           children: [
                             SizedBox(
-                              height: 35,
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                ToggleSwitch(
+                                  minWidth: 150.0,
+                                  initialLabelIndex: menuIndex,
+                                  cornerRadius: 20.0,
+                                  activeFgColor: Colors.white,
+                                  inactiveBgColor: Colors.grey,
+                                  inactiveFgColor: Colors.white,
+                                  totalSwitches: listSize,
+                                  labels: carDetailsModelList.map((e) => e.brand.toUpperCase()+' '+e.model.toUpperCase()).toList(),
+                                  icons: [Icons.forward, Icons.done_all],
+                                  activeBgColors: [[Colors.blue],[Colors.green]],
+                                  onToggle: (index) {
+                                    setState(() {
+                                      selectedCarDetails = carDetailsModelList[index!];
+                                      menuIndex = index;
+                                    });
+                                  },
+                                ),
+                              ],
+                              mainAxisSize: MainAxisSize.min,
+                            ),
+                            SizedBox(
+                              height: 15,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: carDetails.brand,
+                                    content: carDetailsModelList[menuIndex].brand,
                                     icon: Icon(
                                       Icons.directions_car_filled,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Brand"),
                                 CarDetailContainer(
-                                    content: carDetails.model,
+                                    content: carDetailsModelList[menuIndex].model,
                                     icon: Icon(
                                       Icons.car_rental,
                                       color: Colors.blueGrey.shade900,
@@ -152,14 +193,14 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: carDetails.year,
+                                    content: carDetailsModelList[menuIndex].year,
                                     icon: Icon(
                                       Icons.calendar_today_rounded,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Year"),
                                 CarDetailContainer(
-                                    content: carDetails.km,
+                                    content: carDetailsModelList[menuIndex].km,
                                     icon: Icon(
                                       Icons.double_arrow_rounded,
                                       color: Colors.blueGrey.shade900,
@@ -172,14 +213,14 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: carDetails.engineSize,
+                                    content: carDetailsModelList[menuIndex].engineSize,
                                     icon: Icon(
                                       Icons.miscellaneous_services,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Engine size"),
                                 CarDetailContainer(
-                                    content: carDetails.vin,
+                                    content: carDetailsModelList[menuIndex].vin,
                                     icon: Icon(
                                       Icons.document_scanner,
                                       color: Colors.blueGrey.shade900,
@@ -192,14 +233,14 @@ class Body extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CarDetailContainer(
-                                    content: carDetails.fuel,
+                                    content: carDetailsModelList[menuIndex].fuel,
                                     icon: Icon(
                                       Icons.local_gas_station_rounded,
                                       color: Colors.blueGrey.shade900,
                                     ),
                                     title: "Fuel type"),
                                 CarDetailContainer(
-                                    content: carDetails.hp,
+                                    content: carDetailsModelList[menuIndex].hp,
                                     icon: Icon(
                                       Icons.speed,
                                       color: Colors.blueGrey.shade900,

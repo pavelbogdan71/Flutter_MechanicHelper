@@ -15,6 +15,18 @@ class DatabaseService {
         SetOptions(merge: true));
   }
 
+  Future<void> getCarsDetailsList(List<CarDetailsModel> carDetailsModelList)async{
+    QuerySnapshot querySnapshot = await carDetails.doc('${FirebaseAuth.instance.currentUser.email}').collection('cars').get();
+    final data = querySnapshot.docs.map((e) => e.id).toList();
+    carDetailsModelList.clear();
+  }
+
+  Future<void> addCarDetailsToCarList(CarDetailsModel carDetailsModel) {
+    return carDetails.doc('${FirebaseAuth.instance.currentUser.email}').collection('cars').doc(carDetailsModel.brand+' '+carDetailsModel.model).set(
+        CarDetailsModel.carDetailsToMap(carDetailsModel),
+        SetOptions(merge: true));
+  }
+
   Future<void>addAppointment(DateTime selectedTime,TimeOfDay startTime,TimeOfDay endTime,CarDetailsModel carDetailsModel,String serviceType){
 
     return FirebaseFirestore.instance.collection('appointments').doc('mechanic1').update(

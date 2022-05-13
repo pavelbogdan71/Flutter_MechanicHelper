@@ -33,6 +33,8 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
   String selectedFuelType = '';
   String selectedHp = '';
   String selectedYear = '';
+  String selectedVin = '';
+  String selectedKm = '';
 
   CarDetailsModel carDetailsModel = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
 
@@ -151,18 +153,40 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
                             showSelectedItems: true,
                             selectedItem: selectedYear,
                             onChanged: (String? value){
-                              selectedYear = value!;
+                              setState(() {
+                                selectedYear = value!;
+                              });
                             },
                           ),
                           SizedBox(height: 10,),
                           Text("Kilometers"),
                           TextFormField(
-
+                            onChanged: (value){
+                              selectedKm = value;
+                            },
                           ),
                           SizedBox(height: 10,),
                           Text("VIN"),
                           TextFormField(
-
+                            onChanged: (value){
+                              setState(() {
+                                selectedVin = value;
+                              });
+                            },
+                          ),
+                          ElevatedButton(
+                              onPressed: (){
+                                CarDetailsModel carDetailsModel = CarDetailsModel(brand: selectedBrand,
+                                    engineSize: selectedEngine,
+                                    fuel: selectedFuelType,
+                                    hp: selectedHp,
+                                    km: selectedKm,
+                                    model: selectedModel,
+                                    vin: selectedVin,
+                                    year: selectedYear);
+                                DatabaseService().addCarDetailsToCarList(carDetailsModel);
+                              },
+                              child: Text("DONE")
                           )
                         ],
                       );
