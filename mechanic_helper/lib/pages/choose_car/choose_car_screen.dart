@@ -22,6 +22,20 @@ class ChooseCarScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 5,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(Icons.arrow_back_sharp,color: kPrimaryColor,),
+                  style: ElevatedButton.styleFrom(primary: Colors.grey.shade200),
+                ),
+              ],
+            ),
             Container(
               padding: const EdgeInsets.only(top: 30, left: 20, bottom: 30),
               child: Text(

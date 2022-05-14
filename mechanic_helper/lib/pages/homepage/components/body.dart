@@ -9,6 +9,7 @@ import 'package:mechanic_helper/constants/strings.dart';
 import 'package:mechanic_helper/external_libs/open_container.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
+import 'package:mechanic_helper/extensions/string_extension.dart';
 
 import '../../choose_car/choose_car_screen.dart';
 
@@ -357,7 +358,7 @@ class BodyState extends State<Body> {
                   width: size.width * 0.95,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 OpenContainer(
                     closedColor: Colors.transparent,
@@ -367,12 +368,32 @@ class BodyState extends State<Body> {
                         ChooseCarScreen(),
                     closedBuilder: (BuildContext context, VoidCallback _) {
                       return Container(
-                        child: Text(carDetailsModel.brand.isEmpty
-                            ? "You didn't choose a car, click here!"
-                            : "Your selected car is: " +
-                                carDetailsModel.brand +
-                                " " +
-                                carDetailsModel.model),
+                        child: Center(
+                          child: Text(carDetailsModel.brand.isEmpty
+                              ? "You didn't choose a car, click here!"
+                              : "Your selected car is: " +
+                              carDetailsModel.brand.capitalize() +
+                              " " +
+                              carDetailsModel.model.capitalize(),
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.comfortaa(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                                textStyle: Theme.of(context).textTheme.headline1))
+                        ) ,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              color: Color(0xFFECEFF1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF546E7A),
+                                  spreadRadius: 1,
+                                  blurRadius: 10,
+                                  offset: Offset(4, 5),
+                                )
+                              ]),
+                        width: size.width*0.6,
+                        height: size.height*0.05,
                       );
                     })
               ],
