@@ -105,4 +105,6 @@ class DatabaseService {
   Future<QuerySnapshot> getServicePrice(CarDetailsModel carDetailsModel) async{
     return await FirebaseFirestore.instance.collection('cars/'+carDetailsModel.brand.toLowerCase()+'/models/'+carDetailsModel.model.toLowerCase()+'/engine/'+carDetailsModel.engineSize+'/fuel/'+carDetailsModel.fuel.toLowerCase()+'/hp/'+carDetailsModel.hp+'/year').get();
   }
+
+
 }

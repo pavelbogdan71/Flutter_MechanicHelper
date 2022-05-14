@@ -10,9 +10,11 @@ import 'package:mechanic_helper/external_libs/open_container.dart';
 import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/services/database_service.dart';
 
-class Body extends StatefulWidget{
+import '../../choose_car/choose_car_screen.dart';
+
+class Body extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() =>BodyState();
+  State<StatefulWidget> createState() => BodyState();
 }
 
 class BodyState extends State<Body> {
@@ -66,7 +68,7 @@ class BodyState extends State<Body> {
               time = data[i].data()[service]['time'];
             }
           }
-            timeForRepair = int.parse(time);
+          timeForRepair = int.parse(time);
           return Text(
             'Required time: ' + time + ' hours',
             style: GoogleFonts.comfortaa(
@@ -79,7 +81,6 @@ class BodyState extends State<Body> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +116,7 @@ class BodyState extends State<Body> {
                   width: size.width,
                 ),
                 SizedBox(
-                  height: 45,
+                  height: 35,
                 ),
                 Container(
                   child: Column(
@@ -134,11 +135,12 @@ class BodyState extends State<Body> {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, oilChange),
                               serviceType: oilChangeDetailsTitle,
-                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                  carDetailsModel, oilChange),
-                                      description: oilChangeDescription,
-                                      timeForRepair: timeForRepair,
-                                      carDetailsModel: carDetailsModel,
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
+                                      carDetailsModel, oilChange),
+                              description: oilChangeDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
                             ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
@@ -160,12 +162,13 @@ class BodyState extends State<Body> {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, tireReplacement),
                               serviceType: tireReplacementDetailsTitle,
-                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                  carDetailsModel, tireReplacement),
-                                      description: tireReplacementDescription,
-                                      timeForRepair: timeForRepair,
-                                      carDetailsModel: carDetailsModel,
-                                    ),
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
+                                      carDetailsModel, tireReplacement),
+                              description: tireReplacementDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -186,12 +189,13 @@ class BodyState extends State<Body> {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, batteryReplacement),
                               serviceType: batteryReplacementDetailsTitle,
-                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                  carDetailsModel, batteryReplacement),
-                                      description: batteryReplacementDescription,
-                                      timeForRepair: timeForRepair,
-                                      carDetailsModel: carDetailsModel,
-                                    ),
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
+                                      carDetailsModel, batteryReplacement),
+                              description: batteryReplacementDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -213,12 +217,13 @@ class BodyState extends State<Body> {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, brakeRepair),
                               serviceType: brakeRepairDetailsTitle,
-                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                  carDetailsModel, brakeRepair),
-                                      description: brakeRepairDescription,
-                                      timeForRepair: timeForRepair,
-                                      carDetailsModel: carDetailsModel,
-                                    ),
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
+                                      carDetailsModel, brakeRepair),
+                              description: brakeRepairDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -247,12 +252,13 @@ class BodyState extends State<Body> {
                               priceWidget: getRepairPriceFromDB(
                                   carDetailsModel, wheelBalance),
                               serviceType: wheelBalanceDetailsTitle,
-                              serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                  carDetailsModel, wheelBalance),
-                                      description: wheelBalanceDescription,
-                                      timeForRepair: timeForRepair,
-                                      carDetailsModel: carDetailsModel,
-                                    ),
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
+                                      carDetailsModel, wheelBalance),
+                              description: wheelBalanceDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -268,17 +274,18 @@ class BodyState extends State<Body> {
                             openElevation: 4.0,
                             openBuilder:
                                 (BuildContext context, VoidCallback _) =>
-                                ServiceDetailContainer(
-                                  imagePath: gearboxServiceImagePath,
-                                  priceWidget: getRepairPriceFromDB(
+                                    ServiceDetailContainer(
+                              imagePath: gearboxServiceImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, gearboxService),
+                              serviceType: gearboxServiceDetailsTitle,
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, gearboxService),
-                                  serviceType: gearboxServiceDetailsTitle,
-                                  serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                      carDetailsModel, gearboxService),
-                                  description: gearboxServiceDescription,
-                                  timeForRepair: timeForRepair,
-                                  carDetailsModel: carDetailsModel,
-                                ),
+                              description: gearboxServiceDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -294,22 +301,24 @@ class BodyState extends State<Body> {
                             openElevation: 4.0,
                             openBuilder:
                                 (BuildContext context, VoidCallback _) =>
-                                ServiceDetailContainer(
-                                  imagePath: suspensionServiceImagePath,
-                                  priceWidget: getRepairPriceFromDB(
+                                    ServiceDetailContainer(
+                              imagePath: suspensionServiceImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, suspensionService),
+                              serviceType: suspensionServiceDetailsTitle,
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, suspensionService),
-                                  serviceType: suspensionServiceDetailsTitle,
-                                  serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                      carDetailsModel, suspensionService),
-                                  description: suspensionServiceDescription,
-                                  timeForRepair: timeForRepair,
-                                  carDetailsModel: carDetailsModel,
-                                ),
+                              description: suspensionServiceDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
                                   text: suspensionServiceDetailsTitle,
-                                  imagePath: suspensionServiceHomepageImagePath);
+                                  imagePath:
+                                      suspensionServiceHomepageImagePath);
                             },
                             transitionType: ContainerTransitionType.fadeThrough,
                             transitionDuration: Duration(milliseconds: 1000),
@@ -320,17 +329,18 @@ class BodyState extends State<Body> {
                             openElevation: 4.0,
                             openBuilder:
                                 (BuildContext context, VoidCallback _) =>
-                                ServiceDetailContainer(
-                                  imagePath: carCheckImagePath,
-                                  priceWidget: getRepairPriceFromDB(
+                                    ServiceDetailContainer(
+                              imagePath: carCheckImagePath,
+                              priceWidget: getRepairPriceFromDB(
+                                  carDetailsModel, carCheck),
+                              serviceType: carCheckDetailsTitle,
+                              serviceTimeInHours:
+                                  getWidgetRepairTimeInHoursFromDB(
                                       carDetailsModel, carCheck),
-                                  serviceType: carCheckDetailsTitle,
-                                  serviceTimeInHours: getWidgetRepairTimeInHoursFromDB(
-                                      carDetailsModel, carCheck),
-                                  description: carCheckDescription,
-                                  timeForRepair: timeForRepair,
-                                  carDetailsModel: carDetailsModel,
-                                ),
+                              description: carCheckDescription,
+                              timeForRepair: timeForRepair,
+                              carDetailsModel: carDetailsModel,
+                            ),
                             closedBuilder:
                                 (BuildContext context, VoidCallback _) {
                               return const ServiceRepairCategory(
@@ -345,7 +355,26 @@ class BodyState extends State<Body> {
                     ],
                   ),
                   width: size.width * 0.95,
-                )
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                OpenContainer(
+                    closedColor: Colors.transparent,
+                    transitionType: ContainerTransitionType.fadeThrough,
+                    transitionDuration: const Duration(milliseconds: 1000),
+                    openBuilder: (BuildContext context, VoidCallback _) =>
+                        ChooseCarScreen(),
+                    closedBuilder: (BuildContext context, VoidCallback _) {
+                      return Container(
+                        child: Text(carDetailsModel.brand.isEmpty
+                            ? "You didn't choose a car, click here!"
+                            : "Your selected car is: " +
+                                carDetailsModel.brand +
+                                " " +
+                                carDetailsModel.model),
+                      );
+                    })
               ],
             );
           }
