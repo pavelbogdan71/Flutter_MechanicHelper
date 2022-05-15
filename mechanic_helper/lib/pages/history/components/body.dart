@@ -125,6 +125,56 @@ class BodyState extends State<Body> {
                                   historyListFinished;
                                 });
                               });
+
+                              if(menuIndex==0 && historyListUpcoming.length==0){
+                                return Column(
+                                  children: [
+                                    SizedBox(height: 100,),
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 60,),
+                                        SizedBox(
+                                          child: Text("You don't have any upcoming appointments",
+                                            style: GoogleFonts.comfortaa(
+                                              color: Colors.blueGrey.shade900,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w900,
+
+                                            )),
+                                          width: 300,
+                                        )
+
+                                      ],
+                                    )
+
+                                  ],
+                                );
+                              }
+
+                              if(menuIndex==1 && historyListFinished.length==0){
+                                return Column(
+                                  children: [
+                                    SizedBox(height: 100,),
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 60,),
+                                        SizedBox(
+                                          child: Text("You don't have any finished appointments",
+                                              style: GoogleFonts.comfortaa(
+                                                color: Colors.blueGrey.shade900,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w900,
+
+                                              )),
+                                          width: 300,
+                                        )
+
+                                      ],
+                                    )
+
+                                  ],
+                                );
+                              }
                               return Expanded(
                                   child: Container(
                                   width: size.width,
