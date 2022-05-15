@@ -8,18 +8,14 @@ import 'package:mechanic_helper/pages/services/database_service.dart';
 
 import '../../components/rounded_input_field.dart';
 
-
-class EditCarDetailsScreen extends StatefulWidget{
-
+class EditCarDetailsScreen extends StatefulWidget {
   EditCarDetailsScreen();
 
   @override
   State<StatefulWidget> createState() => EditCarDetailsScreenState();
-
 }
 
 class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
-
   List<String> carModelsList = [];
   List<String> carBrandsList = [];
   List<String> carEngineList = [];
@@ -36,7 +32,17 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
   String selectedVin = '';
   String selectedKm = '';
 
-  CarDetailsModel carDetailsModel = CarDetailsModel(brand: '', engineSize: '', fuel: '', hp: '', km: '', model: '', vin: '', year: '');
+  CarDetailsModel carDetailsModel = CarDetailsModel(
+      brand: '',
+      engineSize: '',
+      fuel: '',
+      hp: '',
+      km: '',
+      model: '',
+      vin: '',
+      year: '');
+
+  int stepIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -55,144 +61,197 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
           SizedBox(height: 10),
           FutureBuilder<QuerySnapshot>(
             future: DatabaseService().getCarBrands(),
-            builder: (_, snapshotCarBrands){
-              if(snapshotCarBrands.hasData){
-                List<QueryDocumentSnapshot> queryDocs = snapshotCarBrands.data!.docs;
+            builder: (_, snapshotCarBrands) {
+              if (snapshotCarBrands.hasData) {
+                List<QueryDocumentSnapshot> queryDocs =
+                    snapshotCarBrands.data!.docs;
                 queryDocs.forEach((QueryDocumentSnapshot element) {
                   carBrandsList.add(element.id.toString());
                 });
                 return StreamBuilder<DocumentSnapshot>(
-                  stream:FirebaseFirestore.instance
+                  stream: FirebaseFirestore.instance
                       .collection("car_details")
                       .doc('${FirebaseAuth.instance.currentUser.email}')
                       .snapshots(),
-                  builder: (_,snapshot){
-                    if(snapshot.hasData){
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData) {
                       var data = snapshot.data!.data();
                       carDetailsModel = CarDetailsModel.getCarDetails(data);
-                      return Column(
-                        children: [
-                          DropdownSearch(
-                            mode:Mode.MENU,
-                            showSelectedItems: true,
-                            items:carBrandsList,
-                            label:'Brand',
-                            onChanged: (String? value){
+
+                      return Stepper(
+                          physics: ClampingScrollPhysics(),
+                          currentStep: stepIndex,
+                          onStepCancel: () {
+                            if (stepIndex > 0) {
                               setState(() {
-                                selectedBrand = value!;
-                                DatabaseService().getCarModelsList(carModelsList, selectedBrand);
-                                selectedModel = carModelsList.first.toLowerCase();
+                                stepIndex -= 1;
                               });
-                            },
-                            selectedItem: selectedBrand.toLowerCase(),
-                          ),
-                          SizedBox(height: 10,),
-                          DropdownSearch(
-                            mode:Mode.MENU,
-                            items: carModelsList,
-                            label:'Model',
-                            showSelectedItems: true,
-                            selectedItem: selectedModel,
-                            onChanged: (String? value){
-                              setState(() {
-                                selectedModel = value!;
-                                DatabaseService().getCarEngineList(carEngineList, selectedBrand, selectedModel);
-                                selectedEngine = carEngineList.first.toLowerCase();
-                              });
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          DropdownSearch(
-                            mode:Mode.MENU,
-                            items: carEngineList,
-                            label:'Engine',
-                            showSelectedItems: true,
-                            selectedItem: selectedEngine,
-                            onChanged: (String? value){
-                              setState(() {
-                                selectedEngine = value!;
-                                DatabaseService().getCarFuelTypeList(carFuelTypeList, selectedBrand, selectedModel, selectedEngine);
-                                selectedFuelType = carFuelTypeList.first.toLowerCase();
-                              });
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          DropdownSearch(
-                            mode:Mode.MENU,
-                            items: carFuelTypeList,
-                            label:'Fuel type',
-                            showSelectedItems: true,
-                            selectedItem: selectedFuelType,
-                            onChanged: (String? value){
-                              setState(() {
-                                selectedFuelType = value!;
-                                DatabaseService().getCarHpList(carHpList, selectedBrand, selectedModel, selectedEngine, selectedFuelType);
-                                selectedHp = carHpList.first.toLowerCase();
-                              });
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          DropdownSearch(
-                            mode:Mode.MENU,
-                            items: carHpList,
-                            label:'Hp',
-                            showSelectedItems: true,
-                            selectedItem: selectedHp,
-                            onChanged: (String? value){
-                              setState(() {
-                                selectedHp = value!;
-                                DatabaseService().getCarYearList(carYearList, selectedBrand, selectedModel, selectedEngine, selectedFuelType, selectedHp);
-                              });
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          DropdownSearch(
-                            mode:Mode.MENU,
-                            items: carYearList,
-                            label:'Year',
-                            showSelectedItems: true,
-                            selectedItem: selectedYear,
-                            onChanged: (String? value){
-                              setState(() {
-                                selectedYear = value!;
-                              });
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          Text("Kilometers"),
-                          TextFormField(
-                            onChanged: (value){
-                              selectedKm = value;
-                            },
-                          ),
-                          SizedBox(height: 10,),
-                          Text("VIN"),
-                          TextFormField(
-                            onChanged: (value){
-                              setState(() {
-                                selectedVin = value;
-                              });
-                            },
-                          ),
-                          ElevatedButton(
-                              onPressed: (){
-                                CarDetailsModel carDetailsModel = CarDetailsModel(brand: selectedBrand,
-                                    engineSize: selectedEngine,
-                                    fuel: selectedFuelType,
-                                    hp: selectedHp,
-                                    km: selectedKm,
-                                    model: selectedModel,
-                                    vin: selectedVin,
-                                    year: selectedYear);
-                                DatabaseService().addCarDetailsToCarList(carDetailsModel);
-                              },
-                              child: Text("DONE")
-                          )
-                        ],
-                      );
+                            }
+                          },
+                          onStepContinue: () {
+                            setState(() {
+                              stepIndex += 1;
+                            });
+                          },
+                          onStepTapped: (int index) {
+                            setState(() {
+                              stepIndex = index;
+                            });
+                          },
+                          steps: <Step>[
+                            Step(
+                                title: Text('Step 1'),
+                                content: Column(children: [
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  DropdownSearch(
+                                    mode: Mode.MENU,
+                                    showSelectedItems: true,
+                                    items: carBrandsList,
+                                    label: 'Brand',
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedBrand = value!;
+                                        DatabaseService().getCarModelsList(
+                                            carModelsList, selectedBrand);
+                                        selectedModel =
+                                            carModelsList.first.toLowerCase();
+                                      });
+                                    },
+                                    selectedItem: selectedBrand.toLowerCase(),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  DropdownSearch(
+                                    mode: Mode.MENU,
+                                    items: carModelsList,
+                                    label: 'Model',
+                                    showSelectedItems: true,
+                                    selectedItem: selectedModel,
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedModel = value!;
+                                        DatabaseService().getCarEngineList(
+                                            carEngineList,
+                                            selectedBrand,
+                                            selectedModel);
+                                        selectedEngine =
+                                            carEngineList.first.toLowerCase();
+                                      });
+                                    },
+                                  ),
+                                ])),
+                            Step(
+                                title: Text('Step 2'),
+                                content: Column(children: [
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  DropdownSearch(
+                                    mode: Mode.MENU,
+                                    items: carEngineList,
+                                    label: 'Engine',
+                                    showSelectedItems: true,
+                                    selectedItem: selectedEngine,
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedEngine = value!;
+                                        DatabaseService().getCarFuelTypeList(
+                                            carFuelTypeList,
+                                            selectedBrand,
+                                            selectedModel,
+                                            selectedEngine);
+                                        selectedFuelType =
+                                            carFuelTypeList.first.toLowerCase();
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  DropdownSearch(
+                                    mode: Mode.MENU,
+                                    items: carFuelTypeList,
+                                    label: 'Fuel type',
+                                    showSelectedItems: true,
+                                    selectedItem: selectedFuelType,
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedFuelType = value!;
+                                        DatabaseService().getCarHpList(
+                                            carHpList,
+                                            selectedBrand,
+                                            selectedModel,
+                                            selectedEngine,
+                                            selectedFuelType);
+                                        selectedHp =
+                                            carHpList.first.toLowerCase();
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  DropdownSearch(
+                                    mode: Mode.MENU,
+                                    items: carHpList,
+                                    label: 'Hp',
+                                    showSelectedItems: true,
+                                    selectedItem: selectedHp,
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedHp = value!;
+                                        DatabaseService().getCarYearList(
+                                            carYearList,
+                                            selectedBrand,
+                                            selectedModel,
+                                            selectedEngine,
+                                            selectedFuelType,
+                                            selectedHp);
+                                      });
+                                    },
+                                  ),
+                                ])),
+                            Step(
+                                title: Text('Step 3'),
+                                content: Column(children: [
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  DropdownSearch(
+                                    mode: Mode.MENU,
+                                    items: carYearList,
+                                    label: 'Year',
+                                    showSelectedItems: true,
+                                    selectedItem: selectedYear,
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedYear = value!;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Text("Kilometers"),
+                                  TextFormField(
+                                    onChanged: (value){
+                                      selectedKm = value;
+                                    },
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Text("VIN"),
+                                  TextFormField(
+                                    onChanged: (value){
+                                      setState(() {
+                                        selectedVin = value;
+                                      });
+                                    },
+                                  ),
+                                ])),
+                          ]);
                     }
                     return const Center(child: CircularProgressIndicator());
-
                   },
                 );
               }
@@ -204,11 +263,8 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
     );
   }
 
-
-
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 }
