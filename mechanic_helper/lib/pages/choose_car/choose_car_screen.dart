@@ -85,7 +85,7 @@ class ChooseCarScreen extends StatelessWidget {
                 ],
               ),
                   decoration: const BoxDecoration(
-                    color: kPrimaryLightColor,
+                    color: Color(0xFFECEFF1),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40)),

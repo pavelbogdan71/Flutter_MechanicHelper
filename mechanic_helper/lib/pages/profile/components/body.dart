@@ -12,7 +12,7 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      decoration: BoxDecoration(color: Colors.blueGrey.shade100),
+      decoration: BoxDecoration(color: Colors.blueGrey.shade50),
       child: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -46,7 +46,7 @@ class Body extends StatelessWidget {
                     width: size.width * 0.9,
                     height: size.height * 0.21,
                     decoration: BoxDecoration(
-                        color: Colors.blueGrey.shade100,
+                        color: Colors.blueGrey.shade50,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5)),
                         boxShadow: [

@@ -12,9 +12,9 @@ import 'package:mechanic_helper/models/car_details_model.dart';
 import 'package:mechanic_helper/pages/edit_car_details/edit_car_details_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class Body extends StatefulWidget{
+class Body extends StatefulWidget {
   @override
-  BodyState createState() =>BodyState();
+  BodyState createState() => BodyState();
 }
 
 class BodyState extends State<Body> {
@@ -66,9 +66,7 @@ class BodyState extends State<Body> {
                     EditCarDetailsScreen(),
                 closedBuilder: (BuildContext context, VoidCallback _) {
                   return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200
-                    ),
+                    decoration: BoxDecoration(color: Colors.grey.shade200),
                     child: Icon(
                       Icons.add,
                       color: kPrimaryColor,
@@ -109,46 +107,61 @@ class BodyState extends State<Body> {
                   FutureBuilder<QuerySnapshot>(
                     future: FirebaseFirestore.instance
                         .collection("car_details")
-                        .doc('${FirebaseAuth.instance.currentUser.email}').collection('cars')
+                        .doc('${FirebaseAuth.instance.currentUser.email}')
+                        .collection('cars')
                         .get(),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
-                        List<QueryDocumentSnapshot> queryDocs = snapshot.data!.docs;
+                        List<QueryDocumentSnapshot> queryDocs =
+                            snapshot.data!.docs;
                         carDetailsModelList.clear();
                         activeBgColors.clear();
-                        var i=0;
+                        var i = 0;
                         queryDocs.forEach((element) {
-                          activeBgColors.add(i%2==0?[Colors.blue]:[Colors.green]);
-                          carDetailsModelList.add(CarDetailsModel.getCarDetails(element.data()));
+                          activeBgColors
+                              .add(i % 2 == 0 ? [Colors.blue] : [Colors.green]);
+                          carDetailsModelList.add(
+                              CarDetailsModel.getCarDetails(element.data()));
                           i++;
                         });
 
-                        if(carDetailsModelList.length==0){
+                        if (carDetailsModelList.length == 0) {
                           return Container(
-                            child: Row(
-                              children: [
-                                Text("You dont have a car added"),
-                                OpenContainer(
-                                  closedColor: Colors.blue,
-                                  closedElevation: 0.0,
-                                  openElevation: 4.0,
-                                  openBuilder: (BuildContext context, VoidCallback _) =>
-                                      EditCarDetailsScreen(),
-                                  closedBuilder: (BuildContext context, VoidCallback _) {
-                                    return Icon(
-                                      Icons.add,
-                                      color: Colors.grey.shade200,
-                                    );
-                                  },
-                                  transitionType: ContainerTransitionType.fadeThrough,
-                                  transitionDuration: Duration(milliseconds: 1500),
-                                ),
-                              ],
-                            ),
-                          );
+                              child: Column(
+                            children: [
+                              SizedBox(height: 80,),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                  ),
+                                  Text("You don't have a car added",
+                                      style: GoogleFonts.comfortaa(
+                                        color: Colors.blueGrey.shade900,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w900,
+                                      )),
+                                ],
+                              ),
+                              SizedBox(height: 20,),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                  ),
+                                  Text("Press '+' button to add one",
+                                      style: GoogleFonts.comfortaa(
+                                        color: Colors.blueGrey.shade900,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w900,
+                                      ))
+                                ],
+                              )
+                            ],
+                          ));
                         }
 
-                        if(carDetailsModelList.isNotEmpty){
+                        if (carDetailsModelList.isNotEmpty) {
                           return Column(
                             children: [
                               SizedBox(
@@ -164,7 +177,12 @@ class BodyState extends State<Body> {
                                     inactiveBgColor: Colors.grey,
                                     inactiveFgColor: Colors.white,
                                     totalSwitches: carDetailsModelList.length,
-                                    labels: carDetailsModelList.map((e) => e.brand.toUpperCase()+' '+e.model.toUpperCase()).toList(),
+                                    labels: carDetailsModelList
+                                        .map((e) =>
+                                            e.brand.toUpperCase() +
+                                            ' ' +
+                                            e.model.toUpperCase())
+                                        .toList(),
                                     activeBgColors: activeBgColors,
                                     onToggle: (index) {
                                       setState(() {
@@ -183,14 +201,16 @@ class BodyState extends State<Body> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].brand,
+                                      content:
+                                          carDetailsModelList[menuIndex].brand,
                                       icon: Icon(
                                         Icons.directions_car_filled,
                                         color: Colors.blueGrey.shade900,
                                       ),
                                       title: "Brand"),
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].model,
+                                      content:
+                                          carDetailsModelList[menuIndex].model,
                                       icon: Icon(
                                         Icons.car_rental,
                                         color: Colors.blueGrey.shade900,
@@ -203,14 +223,16 @@ class BodyState extends State<Body> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].year,
+                                      content:
+                                          carDetailsModelList[menuIndex].year,
                                       icon: Icon(
                                         Icons.calendar_today_rounded,
                                         color: Colors.blueGrey.shade900,
                                       ),
                                       title: "Year"),
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].km,
+                                      content:
+                                          carDetailsModelList[menuIndex].km,
                                       icon: Icon(
                                         Icons.double_arrow_rounded,
                                         color: Colors.blueGrey.shade900,
@@ -223,14 +245,16 @@ class BodyState extends State<Body> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].engineSize,
+                                      content: carDetailsModelList[menuIndex]
+                                          .engineSize,
                                       icon: Icon(
                                         Icons.miscellaneous_services,
                                         color: Colors.blueGrey.shade900,
                                       ),
                                       title: "Engine size"),
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].vin,
+                                      content:
+                                          carDetailsModelList[menuIndex].vin,
                                       icon: Icon(
                                         Icons.document_scanner,
                                         color: Colors.blueGrey.shade900,
@@ -243,14 +267,16 @@ class BodyState extends State<Body> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].fuel,
+                                      content:
+                                          carDetailsModelList[menuIndex].fuel,
                                       icon: Icon(
                                         Icons.local_gas_station_rounded,
                                         color: Colors.blueGrey.shade900,
                                       ),
                                       title: "Fuel type"),
                                   CarDetailContainer(
-                                      content: carDetailsModelList[menuIndex].hp,
+                                      content:
+                                          carDetailsModelList[menuIndex].hp,
                                       icon: Icon(
                                         Icons.speed,
                                         color: Colors.blueGrey.shade900,
@@ -261,7 +287,6 @@ class BodyState extends State<Body> {
                             ],
                           );
                         }
-
                       }
                       return const Center(child: CircularProgressIndicator());
                     },
