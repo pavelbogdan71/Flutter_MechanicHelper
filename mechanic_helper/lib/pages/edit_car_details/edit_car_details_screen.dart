@@ -43,7 +43,19 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
       year: '');
 
   int stepIndex = 0;
+  bool isLastStep = false;
 
+  addCarDetailsToDB(){
+    CarDetailsModel carDetailsModel = CarDetailsModel(brand: selectedBrand,
+        engineSize: selectedEngine,
+        fuel: selectedFuelType,
+        hp: selectedHp,
+        km: selectedKm,
+        model: selectedModel,
+        vin: selectedVin,
+        year: selectedYear);
+    DatabaseService().addCarDetailsToCarList(carDetailsModel);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,6 +91,20 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
                       carDetailsModel = CarDetailsModel.getCarDetails(data);
 
                       return Stepper(
+                          controlsBuilder: (BuildContext context, ControlsDetails details) {
+                            return Row(
+                              children: <Widget>[
+                                TextButton(
+                                  onPressed: details.onStepContinue,
+                                  child: isLastStep? const Text('DONE') : const Text('NEXT'),
+                                ),
+                                TextButton(
+                                  onPressed: details.onStepCancel,
+                                  child: const Text('CANCEL'),
+                                ),
+                              ],
+                            );
+                          },
                           physics: ClampingScrollPhysics(),
                           currentStep: stepIndex,
                           onStepCancel: () {
@@ -90,12 +116,27 @@ class EditCarDetailsScreenState extends State<EditCarDetailsScreen> {
                           },
                           onStepContinue: () {
                             setState(() {
-                              stepIndex += 1;
+                              if(isLastStep){
+                                addCarDetailsToDB();
+                              }
+                              if(stepIndex<2){
+                                stepIndex += 1;
+                              }
+                              if(stepIndex==2){
+                                isLastStep = true;
+                              }else{
+                                isLastStep = false;
+                              }
                             });
                           },
                           onStepTapped: (int index) {
                             setState(() {
                               stepIndex = index;
+                              if(stepIndex==2){
+                                isLastStep = true;
+                              }else{
+                                isLastStep = false;
+                              }
                             });
                           },
                           steps: <Step>[
