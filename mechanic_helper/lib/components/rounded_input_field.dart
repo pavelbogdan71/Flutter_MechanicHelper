@@ -32,7 +32,7 @@ class RoundedInputField extends StatelessWidget {
           ),
           hintText: hintText,
           hintStyle: GoogleFonts.comfortaa(
-            fontSize: 15
+            fontSize: 15,
           ),
           border: InputBorder.none,
           ),
