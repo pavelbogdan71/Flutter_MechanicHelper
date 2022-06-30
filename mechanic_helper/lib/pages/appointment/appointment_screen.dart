@@ -45,7 +45,6 @@ class AppointmentScreenState extends State<AppointmentScreen> {
         weekendDays.add(date);
       }
     }
-
     return weekendDays;
   }
 

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,13 @@ import 'package:mechanic_helper/constants/constants.dart';
 import 'package:mechanic_helper/pages/services/authentication_service.dart';
 import 'package:provider/src/provider.dart';
 
+import '../../services/database_service.dart';
+
 class Body extends StatelessWidget {
+
+  int numberOfAppointments = 0;
+  int numberOfCars = 0;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -126,14 +133,32 @@ class Body extends StatelessWidget {
                                 children: [
                                   SizedBox(width: 50,),
                                   Icon(Icons.directions_car_filled_rounded),
-                                  Text(' 3 cars',
-                                      style: GoogleFonts.comfortaa(
-                                          color: Colors.blueGrey.shade900,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .headline1))
+                                  FutureBuilder<QuerySnapshot>(
+                                    future: FirebaseFirestore.instance
+                                        .collection("car_details")
+                                        .doc('${FirebaseAuth.instance.currentUser.email}')
+                                        .collection('cars')
+                                        .get(),
+                                    builder: (_, snapshot) {
+                                      if(snapshot.hasData) {
+                                        List<QueryDocumentSnapshot> queryDocs =
+                                            snapshot.data!.docs;
+                                        numberOfCars = queryDocs.length;
+
+                                        return Text(' ' + numberOfCars.toString() + ' cars',
+                                            style: GoogleFonts.comfortaa(
+                                                color: Colors.blueGrey.shade900,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500,
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .headline1));
+                                      }
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    },
+                                  ),
+
                                 ],
                               )
                             ],
@@ -164,14 +189,32 @@ class Body extends StatelessWidget {
                                 children: [
                                   SizedBox(width: 50,),
                                   Icon(Icons.calendar_today_rounded),
-                                  Text(' 3 appointments',
-                                      style: GoogleFonts.comfortaa(
-                                          color: Colors.blueGrey.shade900,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .headline1))
+                                  StreamBuilder<DocumentSnapshot>(
+                                    stream: DatabaseService().getAppointments(),
+                                    builder:  (_, snapshot) {
+                                      if(snapshot.hasData) {
+                                        var data = snapshot.data!.data();
+                                        data.forEach((key, value) {
+                                          if (value['client'].toString() ==
+                                              '${FirebaseAuth.instance.currentUser.email}'){
+                                            numberOfAppointments++;
+                                          }
+                                        });
+
+                                        return Text(' ' + numberOfAppointments.toString() + ' appointments',
+                                            style: GoogleFonts.comfortaa(
+                                                color: Colors.blueGrey.shade900,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500,
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .headline1));
+                                      }
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    },
+                                  ),
+
                                 ],
                               )
                             ],
