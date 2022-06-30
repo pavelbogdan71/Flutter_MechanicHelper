@@ -107,7 +107,6 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                   selectionColor: kPrimaryColor,
                   selectedTextColor: Colors.white,
                   onDateChange: (date) {
-                    // New date selected
                     setState(() {
                       selectedDate = date;
                       print(selectedDate);

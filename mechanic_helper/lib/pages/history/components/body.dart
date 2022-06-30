@@ -22,7 +22,6 @@ class BodyState extends State<Body> {
   int menuIndex = 0;
 
   void sortListByDate(List<HistoryServiceDetailContainer> list){
-      //list.sort((a,b)=>a.date.compareTo(b.date));
     list.sort((a, b) {
       if(a.date==b.date){
         return a.startTime.compareTo(b.startTime);

@@ -149,8 +149,6 @@ class _TimeRangeState extends State<TimeRange> {
 
   void _endHourChanged(TimeOfDay hour) {
     setState(() => _endHour = hour);
-    // Check if the [starthour] is not null since it's possible that
-    // the user first select the [endhour] and then the [starthour].
     if (_startHour != null) {
       widget.onRangeCompleted(TimeRangeResult(_startHour!, _endHour!));
     }
